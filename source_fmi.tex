@@ -1,0 +1,2916 @@
+\documentclass[oneside]{book}
+
+\usepackage[italian]{babel}
+\addto\captionsitalian{\renewcommand\chaptername{}}
+
+% CHAPTER FORMAT
+\usepackage{titlesec}
+\titleformat{\chapter}[display]   
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{0pt}{5pt} % left space, upper space, bottom space
+
+%\usepackage[inner=2cm, outer=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{blindtext} % Just some random text
+\usepackage{sidenotes} % Add sidespace for sidenotes and fig.s
+\usepackage{indentfirst} % Indent first paragraph of each section
+\usepackage{epigraph} % quotes
+\usepackage{tikz}
+
+\usepackage[bottom]{footmisc} % note appiccicate al fondo della pagina
+\usepackage[hidelinks]{hyperref} % link di pagina
+
+\usepackage{footnotehyper}
+\makesavenoteenv{tcolorbox}
+
+\usepackage{graphicx} % Add fig.s
+\usepackage{caption}
+\usepackage{float}
+
+\usepackage[font=footnotesize,labelfont=bf]{caption} % small caption font-size
+
+\usepackage{amsmath} % math items
+\usepackage{amsfonts} % math items
+\usepackage{amssymb} % \varnothing command
+
+\usepackage{amsthm}
+\theoremstyle{remark}
+
+\newtheorem*{osservaz}{Osservazione}
+
+
+\usepackage[shortlabels]{enumitem} % elenco con numeri romani
+
+\usepackage{tcolorbox} % colored boxes
+\usepackage{xcolor} %colored text
+
+\let\chaptername\relax % Remove "Chapter", but not the number
+
+
+\newcommand{\chptr}[1]{\chapter{\textit{#1}}\noindent\rule{\textwidth}{1pt}}
+\newcommand{\teorema}[1]{\section{\underline{#1}}}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)} %mod equivalence
+\newcommand{\head}[1]{\textnormal{\textbf{#1}}} %%% table heading
+\newcommand{\cvd}{\begin{flushright}$\square$\end{flushright}} %cvd
+
+\title{Fondamenti Matematici per l'Informatica}
+\author{Zeno Saletti}
+\date{\today}
+
+\begin{document}
+
+
+
+
+
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\chapter*{Prefazione}
+La presente dispensa, tavola di contenuti utili o meno, raccolta
+di appunti o qualsivoglia supporto allo studio, nasce come disordinata
+e incoerente collezione di note trascritte nel corso delle lezioni e
+sessioni di studio ed esercitazioni relative al corso di \textit{Fondamenti
+Matematici per l'Informatica} durante accademico 2022/2023,
+presso l'Università degli Studi di Trento.
+Evolutasi a raccolta dei teoremi fondamentali richiesti all'esame,
+questa dispensa si mostra ora come testo organico e decentemente ordinato. Non si può
+negare il fatto che fossero già presenti materiali tramandati da
+generazioni di studenti durante la stesura di questi appunti, ma
+sentivamo forte l'esigenza di riunire in un unico luogo non solo i
+teoremi, ma anche definizioni, esempi esplicativi di esercizi
+d'esame e spiegazioni teoriche più o meno brevi e più o meno chiare,
+talvolta solo citate oralmente a lezione o difficilmente reperibili.
+
+Qui non si discute di mero esercizio formale, di sfoggio di
+conoscenza o della presunta padronanza di strumenti come \LaTeX.
+Questa dispensa si propone innanzitutto come risorsa (si spera)
+utile agli studenti presenti e futuri, del tutto gratuita. La scienza è umana
+ed è all'umanità che essa viene messa a disposizione. In secondo luogo
+non è garantita l'assenza di errori, siano essi sintattici, grafici, concettuali,
+di interpretazione, di conto, distrazioni e così via. Infine questa dispensa non pretende,
+e non può minimamente farlo, di essere un libro di testo; perché le nozioni
+qui mostrate e trascritte non sono altro che il frutto del lavoro
+di studenti, non professori o esperti in merito. Nonostante ciò,
+nell'ordinare tutti questi appunti è stata prestata la maggior
+attenzione nel riportare fedelmente il significato e il pensiero
+matematico di questa materia straordinaria.
+
+Ultimo, ma forse più il più caro tra i motivi che ci hanno spinto
+a creare queste note, è la speranza che questo corso appassioni
+gli studenti di informatica, sia per quanto riguarda la matematica
+che per l'informatica stessa, perché altresì l'informatica è progenie
+della matematica come la fisica lo è per la filosofia. Certo, molti
+degli argomenti mostrati sono solo un assaggio di quel vasto mondo
+che è la Matematica Discreta e per molti sembrerà solo un conglomerato
+di concetti astratti, oltre che apparentemente inutili. Ma crediamo che
+almeno uno tra i lettori farà tesoro di queste nozioni e che, come noi,
+trovi motivo di spingere ancora più in là la propria curiosità,
+non solo per l'informatica in sé, ma anche per tutto ciò che ha permesso
+a questa giovanissima scienza di progredire, prima fra tutte la matematica.
+
+Non fermatevi solo di fronte alla superficie, perché la totalità del reale non è ancora
+stata scoperta a fondo. La tecnica di crittografia RSA, trattata molto
+brevemente in queste note, è stata una novità per la matematica
+stessa e venne sviluppata solamente a partire dagli anni '70. Finché si ricordava
+da poco il primo allunaggio, tre persone pensavano a cosa potevano fare
+dei semplici numeri interi divisi, moltiplicati, sommati e sottratti;
+apparentemente la cosa più banale che si potesse fare. Eppure si fecero
+ancora passi avanti in matematica, crittografia e informatica seppur dopo
+ben quasi 2500 anni di storia, ovvero dalla trattazione della divisione
+euclidea, anch'essa citata qui.
+
+Ringraziamo chiunque abbia contribuito, direttamente e indirettamente,
+a questo progetto: studenti, con i loro materiali generosamente condivisi
+e ormai reperibili con gran facilità, professori, con la chiarezza delle
+loro lezioni e la disponibilità e l'umorismo, esercitatori, con i loro
+segreti sul come passare l'esame.
+
+Noi non ci abbiamo messo solo impegno e fatica, ma curiosità e voglia di
+saperne ancora di più su questo universo e su noi stessi. Ora tocca a voi
+portare avanti la nostra conoscenza, che è la vostra.
+
+
+\chapter*{Note e Guida al Testo}
+Gli argomenti trattati appartengono alla branca della Matematica Discreta,
+quindi quella matematica che si occupa non del \textit{continuo} ma di
+ciò che è \textit{numerabile} o \textit{finito}. In parole
+semplici, di ciò che si può contare sulle dita di una mano. Il corso
+è diviso in due parti:
+\begin{itemize}
+\item \textbf{Aritmetica Modulare:} dalla teoria degli insiemi,
+si passerà ai numeri naturali e interi, all'operazione di divisione,
+il concetto di congruenza in modulo e infine all'applicazione
+del metodo di crittografia RSA.
+
+\item \textbf{Introduzione alla Teoria dei Grafi:} verrà data un'occhiata
+ad alcuni grafi, se ne daranno definizioni formali (forse meno familiari
+rispetto alla loro controparte grafica) e proprietà rilevanti.
+\end{itemize}
+In più viene aggiunta una terza parte di esercitazione, che riflette
+lo schema di esercitazione durante l'A.A. 2022/2023.
+
+Questi appunti rispettano ancora fedelmente il loro iniziale mandato:
+raccogliere tutti i teoremi utili all'esame, arricchiti con le spiegazioni
+e le indicazioni del professore. Per questo li troverete evidenziati
+all'interno degli appositi box grigi. Col tempo, si sono aggiunte altre
+categorie degne di nota altrettanto evidenziate. Ecco le indicazioni di ogni
+colore:
+\begin{itemize}
+\item \textcolor{gray}{Grigio}: teorema o proposizione rilevante\footnote{Non tutti questi teoremi sono richiesti all'esame.}.
+\item \textcolor{green}{Verde}: corollario.
+\item \textcolor{yellow}{Giallo}: definizione\footnote{Un tempo richieste, tuttavia ancora utili da memorizzare.}.
+\item \textcolor{blue}{Blu}: esempio esplicativo o esercizio con soluzione\footnote{Ricalcano nel modo più accurato possibile le soluzioni tipo d'esame.}.
+\item \textcolor{red}{Rosso}: nozione utile\footnote{Concetti secondari e strumenti di calcolo utili nella risoluzione dei problemi.}.
+\item \textcolor{violet}{Viola}: il lemma utile\footnote{Veramente utile.}.
+\end{itemize}
+I teoremi richiesti al tempo di stesura sono sottolineati, sia
+nei paragrafi che nell'indice, per una veloce consultazione.
+Affidarsi all'indice, non solo all'indicazione visiva dei box
+grigi.
+
+Si fa qui intenso utilizzo di simboli logico-matematici, sia per
+contrarre i predicati e le formule che per produrre fedelmente la
+scrittura ideale da adottare all'esame e al di fuori di esso. Si
+è posta attenzione, per quanto possibile, ad affiancare a tali
+simboli una spiegazione verbale concisa. Sicuramente il testo non
+è del tutto privo di abusi di notazione o simbologia non-standard.
+Per questi ed altri motivi, \textit{gli apppunti non sostituiscono
+interamente le lezioni frontali}. Eventuali spiegazioni più chiare
+e precise sono sicuramente fornite, nella stragrande maggioranza dei
+casi, dal professore. Questa dispensa mira solo a riassumere i contenuti
+delle lezioni.
+
+\begin{center}
+\small
+\textbf{Lo sviluppo di questa dispensa è ancora attivo per sopperire alla
+mancanza degli ultimissimi dettagli.}
+\end{center}
+
+
+
+\tableofcontents
+
+
+
+\part{Aritmetica Modulare}
+
+
+\chptr{Elementi di Insiemistica}
+\section{Primi assiomi}
+Ai fini del corso, mostriamo solo alcuni assiomi e concetti primitivi,
+appartenenti alla teoria degli insiemi, utili a comprendere ciò che
+verrà trattato in seguito.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Elemento, insieme, appartenenza}]
+Intenderemo come primitivi i concetti seguenti:
+\begin{itemize}
+    \item \textbf{Elemento:} intuitivamente, un oggetto qualsiasi.
+    \item \textbf{Insieme:} intuitivamente, una collezione di elementi.
+\end{itemize}
+Un oggetto si può considerare insieme se è sempre possibile stabilire
+\emph{senza ambiguità} se qualche cosa è un suo elemento oppure no.
+Tale affermazione esprime la relazione di \textbf{appartenenza}
+tra elemento e insieme.
+\[ A \text{ è un insieme } \Longleftrightarrow \forall x,x\in A \text{ o } x\not\in A \]
+\end{tcolorbox}
+
+\begin{osservaz}
+un insieme può essere a sua volta un elemento.
+Si riscontrerà spesso tale fatto in questo corso, dove compariranno
+insiemi contenenti insiemi, definiti opportunamente e senza ambiguità.
+\end{osservaz}
+
+\noindent Anche se la richiesta espressa dalla condizioine di appartenenza può sembrare
+scontata, in realtà può essere fonte di problemi. Consideriamo l'oggetto
+\[ R = \{x|x\not\in x\} \]
+Per capire se $R$ è un insieme, è necessario passare in rassegna ogni oggetto
+$x$ e stabilire se esso appartiene o meno a $R$ (affinché $x\in R$, deve valere
+la condizione espressa $x\not\in x$). Quando si dice \textit{ogni oggetto} si
+intende anche $R$ stesso. Ecco cosa accade quando si tenta di stabilire se
+$R\in R$:
+\begin{itemize}
+\item Se $R\in R$, allora, per costruzione di $R$, deve essere $R\not\in R$.
+\item Se invece $R\not\in R$, vuol dire che $R$ non rispetta la condizione, pertanto $R\in R$.
+\end{itemize}
+Dunque si giunge a concludere che \[ R\in R \Longleftrightarrow R\not\in R \]
+che è un'evidente contraddizione. Ciò che è stato appena illustrato è il \textit{paradosso
+di Russell}. Grazie agli assiomi precedenti, è allora garantito che $R$ non è
+un insieme. Un altro esempio di oggetto non classificabile come insieme è
+l'\textit{insieme universo} $\mathcal{U}$ (vedi più avanti).
+
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Assioma di Estensionalità}]
+Due insiemi sono uguali se possiedono gli stessi elementi.
+\[ A = B \Longleftrightarrow (\forall x,x\in A \Leftrightarrow x \in B) \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Esistenza dell'insieme vuoto]
+Esiste un insieme, chiamato insieme vuoto (indicato col simbolo $\varnothing$), che non possiede elementi.
+\[\exists \varnothing:\forall x, x\not\in\varnothing\]
+Tale insieme è unico (si dimostra attraverso l'Estensionalità).
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Sottoinsiemi}]
+Siano $X,Y$ due insiemi. Si dice che $X$ è sottoinsieme di $Y$
+(equivalentemente si può dire \emph{è contenuto}), utilizzando il simbolo $\subseteq$,
+se ogni elemento di $X$ è elemento di $Y$.
+\[ X \subseteq Y \Longleftrightarrow \forall x(x\in X \Rightarrow x\in Y) \]
+\end{tcolorbox}
+
+\begin{osservaz}
+Esistono molteplici simboli per indicare i
+sottoinsiemi, del tutto equivalenti: $\subseteq,\subseteqq$. Per indicare sottoinsiemi
+\textbf{propri} (non possono coincidere col sovrainsieme) si utilizzano,
+sempre equivalentemente, i simboli $\subsetneq,\subsetneqq$, poco usati
+qui. La letteratura e i contesti accademici trattano $\subset$ sia per
+indicare sottoinsiemi propri che non e non sempre è chiara la sua definizione.
+\end{osservaz}
+
+\section{Insiemi e proprietà: l'assioma di separazione}
+Un modo di definire alcuni insiemi è quello di impiegare una \textit{proprietà}
+che ne caratterizzi gli elementi. Una proprietà non è altro che una proposizione,
+cioè un'affermazione vera e propria, come
+\[ P(x) := \textit{ x è fan dei Caesars} \]
+Ovviamente a noi interesseranno affermazioni relative a oggetti matematici.
+In generale $P(x)$ può essere vera o falsa a seconda di $x$, ma asserzioni come
+\[ \forall x \quad x\in\varnothing\Longrightarrow P(x) \]
+sono sempre vere. Sembra assurdo, ma approfittiamo di questo esempio per
+spiegare che il simbolo $\Longrightarrow$ (\textit{se [ipotesi] allora [tesi]}) esprime, in matematica, \textit{l'implicazione logica materiale}.
+In altre parole, l'intera implicazione è vera se l'ipotesi è falsa oppure se
+è vera la tesi. \textit{Ex falso quodlibet}, dal falso segue ogni cosa. Nel
+nostro caso, la tesi $x\in\varnothing$ è sempre falsa, quindi possiamo
+supporre che tutti gli elementi dell'insieme vuoto sono fan dei Caesars.
+
+
+Se $P$ è una proposizione esprimibile
+in termini insiemistici, cioè attraverso gli opportuni simboli e connettori
+logici, allora scrivendo
+\[\{x|P(x)\}\]
+si intende la collezione di tutti gli $x$ che soddisfano $P$. Il paradosso
+di Russel in realtà è prova che, in generale, un tale oggetto non è
+sempre un insieme. Perciò occorre l'assioma della separazione, che tuttavia
+non permette di costruire tutti gli insiemi della teoria degli insiemi, i
+quali devono essere definiti con altri assiomi
+(tali insiemi esulano da questo corso).
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Assioma della separazione}]
+Se $X$ è un insieme e $P$ una proprietà esprimibile come proposizione
+scritta in termini del linguaggio della teoria degli insiemi, allora
+la collezione
+\[ \{x|x\in X, P(x)\} \]
+è un insieme. Alternativamente, vale anche la notazione $\{x\in X|P(x)\}$.
+\end{tcolorbox}
+
+Possiamo ora spiegare perché non esiste $\mathcal{U}$, l'insieme di tutti
+gli insiemi. Supponiamo invece che $\mathcal{U}$ esista; allora possiamo
+scrivere
+\[ \{x|x\not\in x\} = \{x\in\mathcal{U}|x\not\in x\} \]
+Questo perché $x$, nel membro di sinistra, è anche un insieme; dal momento
+che $\mathcal{U}$ è un insieme di insiemi, allora $x\in\mathcal{U}$.
+Ma per il paradosso di Russell, il primo membro non può essere un insieme;
+quello di destra, per l'assioma di separazione, invece lo è, perché abbiamo
+supposto l'esistenza di $\mathcal{U}$\footnote{Il paradosso si supera
+introducendo la nozione di \textit{classe}, che tuttavia non vedremo qui.}.
+
+\section{Operazioni tra insiemi}
+Se $X$ e $Y$ sono insiemi, si possono ricavare altri insiemi, per mezzo
+dell'assioma della separazione, attraverso le seguenti operazioni:
+\begin{enumerate}
+\item \textbf{Intersezione:} $X\cap Y=\{x|x\in X, x\in Y\}$
+\item \textbf{Differenza:} $X\setminus Y=\{x|x\in X,x\not\in Y\}$
+\item \textbf{Unione:} $X\cup Y=\{x|x\in X \vee x\in Y\}$
+\item \textbf{Prodotto:} $X\times Y=\{(x,y)|x\in X, y\in Y\}$
+\item \textbf{Potenza:} $2^X=\{x|x\subseteq X\}$
+\end{enumerate}
+Se $I$ è un insieme e per ogni $i\in I$ è dato un insieme $X_i$
+(si dice che gli $X_i$ sono indicizzati su $I$, cioè $I$ serve
+solamente a \emph{numerare} o etichettare gli $X_i$), ridefiniamo
+unione e intersezione al caso generale di insiemi multipli:
+\begin{enumerate}
+\item \textbf{Intersezione:} $\bigcap_{i\in I}X_i=\{x|\forall i \quad x\in X_i\}$
+\item \textbf{Unione:} $\bigcup_{i\in I}X_i=\{x|\exists i:x\in X_i\}$
+\end{enumerate}
+A parole, l'intersezione include gli $x$ appartenenti \textit{ad ogni}
+$X_i$, mentre l'unione include gli $x$ contenuti in \textit{almeno un}
+$X_i$.
+
+
+
+\section{Relazioni e funzioni}\label{relaz}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Relazione}]
+Siano $X,Y$ insiemi. Si dice relazione ($\mathcal{R}$) tra $X$ e $Y$ un sottoinsieme
+del prodotto tra $X$ e $Y$.
+\[\mathcal{R}\subseteq X\times Y\]
+Si scriverà anche $x\mathcal{R}y$ per indicare $(x,y)\in\mathcal{R},
+\quad x\in X,y\in Y$. Una relazione in $X\times X$, cioè tra $X$ e se stesso,
+si chiamerà \textit{relazione binaria} su $X$.
+\end{tcolorbox}
+
+\noindent Anche nella vita di tutti i giorni, si incontra spesso una classe di relazioni,
+dette \textit{relazioni di equivalenza}, che condividono tre proprietà semplici ma per
+nulla scontate.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Relazione di equivalenza}]
+Sia $X$ un insieme e sia $\mathcal{R}$ una relazione binaria su $X$
+(cioè $\mathcal{R} \subseteq X \times X$). Diciamo che $\mathcal{R}$ è una
+relazione di equivalenza su $X$ se possiede le seguenti proprietà:
+\begin{enumerate}
+    \item \textbf{Riflessiva:} $\forall x \in X, \quad x \mathcal{R} x$
+    \item \textbf{Simmetrica:} $\forall x,y \in X, \quad x \mathcal{R}y \Longrightarrow y \mathcal{R} x$
+    \item \textbf{Transitiva:} $\forall x,y,z \in X, \quad x \mathcal{R} y \text{ e } y \mathcal{R} z \Longrightarrow x \mathcal{R} z$
+\end{enumerate}
+\end{tcolorbox}
+
+\noindent La portata di questo genere di relazioni è ampia e copre non solo i linguaggi
+matematici, ma anche la logica quotidiana. Ad esempio, qualsiasi cosa è uguale
+a sé stessa; se la mia auto ha lo stesso colore della tua, allora la tua auto ha lo stesso
+colore della mia; se posso raggiungere Roma in skateboard partendo da Verona,
+e posso fare altrettanto da Roma a Foggia, posso viaggiare in skateboard da
+Verona a Foggia. In informatica si possono incontrare numerose relazioni di
+equivalenza. Generalmente nei corsi di teoria dei linguaggi di programmazione
+si tratta \textit{l'equivalenza di tipo}, che è una relazione di equivalenza.
+In Java esiste il metodo \texttt{equals} (si occupa del confronto tra oggetti
+appartenenti a classi date), la cui definizione deve mandatoriamente
+rispettare le proprietà delle relazioni di equivalenza. Tale obbligo spetta
+peraltro al programmatore, qualora si decida di effettuare \textit{override}
+del metodo.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Funzione}]
+Una relazione $f\subseteq X\times Y$ si dice \textit{funzione} (o funzione
+\textit{totale}) se per ogni $x\in X$ esiste unico $y\in Y$ per cui $xfy$.
+\[ f \text{ funzione} \Longleftrightarrow \forall x\in X,\exists!y\in Y:xfy \]
+Si scriverà anche $f:X\to Y$ per indicare che $f$ è una funzione (o applicazione)
+da $X$ in $Y$ e $y=f(x)$ come sinonimo di $(x,y)\in f$.
+\end{tcolorbox}
+
+L'insieme $\{x\in X|\exists y\in Y: y=f(x)\}$ prende il nome di \textit{dominio}
+di $f$ ($\text{dom}(f)$), mentre $\{y\in Y|\exists x\in\text{dom}(f):y=f(x)\}$
+è l'\textit{immagine} di $f$. In realtà, per la definizione appena data
+$\text{dom}(f)=X$, ma ciò è vero per le funzioni \textit{totali}. Esistono
+anche funzioni \textit{parziali}, nelle quali per ogni $x\in X$ esiste \textit{al più}
+un $y\in Y$ col quale $x$ è in relazione. Per noi saranno importanti le funzioni
+totali.
+
+Denotiamo con $Y^X$ l'insieme di tutte le funzioni totali da $X$ a $Y$, cioè
+\[ Y^X = \{f\in2^{X\times Y}| \forall x\in X, \exists!y\in Y: xfy\} \]
+Se $X$ è un insieme, $\text{id}_X = \{(x_1,x_2\in X\times X| x_1=x_2)\}$ è
+una funzione, chiamata \textit{identità} di $X$ e vale \[ \text{id}_X(x)=x \quad \forall x\in X\]
+Se $f:X\to Y$ è una funzione e $A\subseteq X$, allora $f\cap(A\times Y)$
+è ancora una funzione, chiamata \textit{restrizione di $f$ ad $A$} e indicata
+con $f|_A$. In altre parole, essa rappresenta una parte della funzione $f$,
+ristretta ad un sottoinsieme del suo dominio.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Composizione}]
+\end{tcolorbox}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Iniettività, surgettività, bigettività}]
+\end{tcolorbox}
+
+\section{Equipotenza di insiemi}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Insiemi equipotenti}]
+Siano $X,Y$ insiemi. Essi si dicono equipotenti se esiste una bigezione
+$f:X\to Y$. Si dice anche che $X,Y$ hanno la stessa Cardinalità.
+\[ X\sim Y \Longleftrightarrow \exists f:X\to Y \text{ bigettiva} \]
+\end{tcolorbox}
+
+Si può mostrare che l'equipotenza tra insiemi è una relazione di
+equivalenza:
+\begin{enumerate}
+\item \textbf{Riflessività:} $X\sim X$
+\item \textbf{Simmetricità:} $X\sim Y \Longrightarrow Y\sim X$
+\item \textbf{Transitività:} $X\sim Y, Y\sim Z \Longrightarrow X\sim Z$
+\end{enumerate}
+Non definiremo nel dettaglio la cardinalità. Basta sapere che esiste
+una classe di insiemi detti \textit{cardinali} che godono delle seguenti
+proprietà:
+\begin{itemize}
+\item ogni insieme $X$ è equipotente ad uno ed un solo cardinale,
+denotato con $|X|$;
+\item due cardinali diversi non sono equipotenti tra loro.
+\end{itemize}
+Queste informazioni tornano utili in questo corso per trattare gli
+insiemi finiti.
+
+\begin{tcolorbox}[title={Equipotenza e cardinali}]
+Siano $X,Y$ insiemi.
+\[ X\sim Y \Longleftrightarrow |X|=|Y| \]
+\end{tcolorbox}
+
+
+
+
+\chptr{Sui Numeri Naturali; Insiemi Ordinati e Finiti}
+\section{L'insieme $\mathbb{N}$}
+Un insieme numerico fondamentale in matematica discreta—in
+particolar modo per questo corso—è quello dei numeri naturali,
+indicato con il simbolo $\mathbb{N}$. La sua struttura attuale
+è dovuta al matematico italiano Giuseppe Peano, che formalizzò
+la natura di tale insieme attraverso i suoi celebri assiomi.
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Assiomi di Peano]
+\begin{enumerate}[(i)]
+    \item $\mathbb{N}$ ammette almeno un elemento: 0 (zero). \[ 0 \in \mathbb{N} \]
+    \item Esiste una funzione iniettiva avente $\mathbb{N}$ come dominio sia come codominio.
+    \[ \exists \text{ succ: } \mathbb{N} \rightarrow \mathbb{N} \text{ iniettiva} \]
+    \item Il successivo di ogni naturale non è mai 0.
+    \[ \forall n \in \mathbb{N}, \text{succ}(n) \not = 0 \]
+    \item \textbf{Assioma di induzione:} Se $A\subseteq\mathbb{N}$ è un sottoinsieme contenente 0 e
+    per cui vale tale proprietà: per ogni naturale $n$, se $n$ appartiene
+    ad $A$, allora anche $\text{succ}(n)$ appartiene ad $A$; allora $A$
+    coincide con $\mathbb{N}$.
+    \[ [A \subseteq \mathbb{N}: 0 \in A, \quad \forall n \in \mathbb{N} \quad (n \in A \Rightarrow \text{succ}(n) \in A)] \quad \Longrightarrow \quad A = \mathbb{N} \]
+\end{enumerate}
+\end{tcolorbox}
+
+L'assioma di induzione costituisce il principio fondante di
+una delle tecniche di dimostrazione più potenti della matematica:
+la dimostrazione per induzione. Questa costituirà infatti la
+logica di dimostrazione maggiormente sfruttata in questo corso.
+
+\section{Il principio di induzione di prima forma}
+\begin{tcolorbox}[title=Prima forma dell'induzione (A)]
+Sia $\{P(n)\}_{n \in \mathbb{N}}$ una famiglia di proposizioni
+indicizzata su $\mathbb{N}$. Supposto che:
+\begin{enumerate}
+    \item $P(0)$ sia vera
+    \item $\forall n \in \mathbb{N} \quad P(n) \Longrightarrow P(n+1)$
+\end{enumerate}
+Allora $P(n)$ è vera $\forall n \in \mathbb{N}$.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} Sia $A = \{n | P(n)\}$. Per la (1) si ha
+che $0 \in A$. Se $n \in A$ allora vale $P(n)$, quindi $P(n+1)$
+vale per la (2), ma allora $n+1 \in A$, quindi per l'assioma di
+induzione $A = \mathbb{N}$.
+\cvd
+\end{tcolorbox}
+
+Spesso si desidera limitare la dimostrazione di certe proposizioni
+ad un sottoinsieme. Per questo esiste una formulazione alternativa
+del principio di induzione, utile a tale scopo.
+
+\begin{tcolorbox}[title=Prima forma dell'induzione (B)]
+Sia $h \in \mathbb{N}$ e sia $\{P(n)\}_{n \geq h}$ una famiglia
+di proposizioni indicizzata su su $n \geq h$. Supposto che:
+\begin{enumerate}
+    \item $P(h)$ sia vera
+    \item $\forall n \geq h \quad P(n) \Longrightarrow P(n+1)$
+\end{enumerate}
+Allora $P(n)$ è vera $\forall n \geq h$.
+$\\\\$
+\textbf{\emph{Dimostrazione:}} Sia $A = \{n \geq h| P(n)\}$.
+
+$n=h$ (base dell'induzione) $n=h \Longrightarrow n \in A \because \text{ip. (1)}$.
+
+$\forall n \geq h, n \Rightarrow n+1$ (passo induttivo) Supposto che qualche $n \in A$,
+con $n \geq h$ allora per (2) si ha $P(n) \Rightarrow P(n+1)$, ma allora $n+1 \in A$.
+Per l'assioma di induzione, $P(n)$ vera $\forall n \geq h$.
+\cvd
+\end{tcolorbox}
+
+Come per molti altri teoremi che vedremo più avanti, le dimostrazioni del
+principio di induzione forniscono uno schema generale per mostrare la validità
+di proposizioni indicizzate sui naturali.
+
+\section{Il teorema di ricorsione}
+Con i soli assiomi di Peano non si può fare molta strada: non
+definiscono operazioni come somma e prodotto e nemmeno relazioni
+d'ordine—poter stabilire se un numero è più grande di un altro—
+sugli elementi di $\mathbb{N}$. Per poter procedere, è necessario
+citare l'assioma di ricorsione—probabilmente il più complesso del
+corso, ma sul quale si fondano operazioni scontate come la somma
+di numeri naturali.
+
+\begin{tcolorbox}[title=Teorema di ricorsione]
+Sia $X$ un insieme, $h:\mathbb{N}\times X\to X$ una funzione
+e $c\in X$. Esiste un'unica funzione $f:\mathbb{N}\to X$ tale
+che
+\begin{align*}
+    f(0) &= c\\
+    f(\text{succ}(n)) &= h(n,f(n)) \quad \forall n \in\mathbb{N}
+\end{align*}
+
+\textit{\textbf{Dimostrazione:}}
+\end{tcolorbox}
+
+
+\section{Operazioni fondamentali sui naturali}
+Enunciato il teorema di ricorsione, definiamo la somma e il prodotto
+in $\mathbb{N}$.
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Somma in $\mathbb{N}$}]
+Dato $n\in\mathbb{N}$ si definisce + la funzione $m\mapsto n+m$ ricorsivamente
+nel seguente modo:
+\begin{align*}
+    n + 0 &= n\\
+    n + \text{succ}(m) &= \text{succ}(n + m)
+\end{align*}
+\end{tcolorbox}
+
+Ponendo $\text{succ}(0) = 1$, grazie al teorema di ricorsione si ottiene
+\[ \text{succ}(n) = \text{succ}(n + 0) = n + \text{succ}(0) = n + 1 \]
+D'ora in poi verrà utilizzata questa scrittura, più naturale e familiare,
+per indicare il successivo del numero $n$.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Prodotto in $\mathbb{N}$}]
+Dato $n\in\mathbb{N}$ si definisce il prodotto $m\mapsto nm$
+\begin{align*}
+    n0 &= 0\\
+    n(m+1) &= nm + n
+\end{align*}
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{queste definizioni prevedono solo la
+somma e il prodotto a sinistra, ma si può mostrare che vale
+la \textit{commutatività}, oltre all'associatività e alla
+proprietà distributiva.}
+\end{osservaz}
+
+
+
+\section{Insiemi ordinati}
+Definita la somma, possiamo tramite essa formalizzare
+l'ordinamento dei numeri naturali.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Ordinamento in $\mathbb{N}$}]
+Siano $n,m\in\mathbb{N}$. Diremo che $n$ è \textit{minore o guale} a $m$
+scrivendo
+\[ n\leq m \Longleftrightarrow \exists k\in\mathbb{N}: m = n+k \]
+\end{tcolorbox}
+L'ordinamento sui naturali $\leq$ può essere visto come sottoinsieme
+di $\mathbb{N}\times\mathbb{N}$, cioè \[ \leq \quad=\quad \{(n,m)\in\mathbb{N}\times\mathbb{N}|\exists k\in\mathbb{N}:m=n+k\} \]
+e dunque $\leq$ è una relazione sui naturali. Infatti $n\leq m$ ha
+lo stesso significato di $(n,m)\in\leq$, seguendo la definizione
+insiemistica (vedi \ref{relaz}). Valgono poi le seguenti proprietà
+(dimostrabili) $\forall n,m,k\in\mathbb{N}$:
+\begin{enumerate}
+\item $n\leq n$
+\item $n\leq m, m\leq n \Longrightarrow n = m$
+\item $n\leq m, m\leq k \Longrightarrow n \leq k$
+\item $n\leq m \text{ o } m\leq n$
+\end{enumerate}
+
+In generale, un ordine degli oggetti può essere stabilito su
+quasi tutti gli insiemi. Infatti il linguaggio insiemistico
+descrive le regole per tale costruzione estendendole ad un
+generico insieme, come si vede nella prossima definizione.
+L'ordinamento dei numeri può sembrare qualcosa di totalmente
+naturale, ma in realtà e in generale si tratta solo di una
+convenzione. In informatica, ad esempio, esiste una relazione
+d'ordine sulle stringhe, che si basa sull'ordine alfabetico
+di lettere e parole. Nulla vieta di stabilire ordinamenti su
+colori o altro ancora.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Relazione d'ordine parziale e totale}]
+Sia $X$ un insieme e $\preceq$ una relazione binaria su
+$X$. $\preceq$ si dice un ordinamento parziale, o relazione
+d'ordine parziale, se valgono se seguenti proprietà:
+\begin{enumerate}
+    \item \textbf{Riflessiva:} $\forall x\in X \quad x\preceq x$
+    \item \textbf{Antisimmetrica:} $\forall x,y\in X \quad x\preceq y, y\preceq x \Longrightarrow x = y$
+    \item \textbf{Transitiva:} $\forall x,y,z\in X \quad x\preceq y, y\preceq z \Longrightarrow x\preceq z$
+\end{enumerate}
+Un ordinamento parziale si dice totale se in più vale la \textbf{tricotomia}
+\[ \forall x,y\in X \quad x\preceq y \text{ o } y\preceq x \]
+\end{tcolorbox}
+Una coppia $(X,\preceq)$ si dice \textit{insieme parzialmente o totalmente
+ordinato}.
+I simboli (equivalenti) $<,\prec$ indicano l'\textit{ordinamento stretto}, ossia
+$x\prec y, x\not=y$. La proprietà di tricotomia può essere riformulata
+in termini di ordinamento stretto scrivendo
+\[ \forall x,y\in X \text{ vale una e una sola tra } x\prec y \text{ o } x=y \text{ o } y\prec x \]
+Introdotto questo nuovo linguaggio, si può allora affermare che
+$(\mathbb{N},\leq)$ è un insieme \textit{totalmente} ordinato.
+
+\section{Insiemi finiti e il lemma dei cassetti}
+Forniamo ora una definizione-notazione usata frequentemente in
+questo corso: dato un numero naturale $n\in\mathbb{N}$ denotiamo
+$I_n = \{0,1,...,n-1\}$. In particolare $I_0 = \varnothing$.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Insieme finito}]
+Un insieme $X$ si dice finito se esiste un naturale $n$ tale che
+$X$ è equipotente a $I_n$. Un insieme è infinito se non è finito.
+\[ X \text{ finito} \Longleftrightarrow \exists n\in\mathbb{N}: X\sim I_n \]
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[title={Lemma dei cassetti}]
+Siano $X,Y$ due insiemi aventi rispettivamente $X \sim I_n$ e $Y \sim I_m$
+con $n < m$. Allora ogni applicazione $f:Y \to X$ non è iniettiva.
+$\\\\$
+\textit{\textbf{Dimostrazione:}} Si procede per induzione su $n \in
+\mathbb{N}$. Se $n=0$ allora $X=\varnothing$ e $Y\not = \varnothing$,
+quindi l'insieme $X^Y$ delle applicazioni $Y\to X$ è vuoto e pertanto
+non c'è nulla da dimostrare (dal falso segue ogni cosa).
+
+Supponiamo che la tesi sia vera per $n$ e proviamola per $n+1$. Sia
+$X \sim I_{n+1}$ e sia $Y \sim I_m$ con $m > n+1$ e supponiamo per
+assurdo che l'applicazione $f:Y\to X$ sia iniettiva. Per definizione
+esiste una bigezione $g:I_{n+1} \to X$; poniamo $x_n = g(n)$ e
+$X' = X-\{x_n\}$. Chiaramente $X'$ è in bigezione con $I_n$. Si
+presentano due casi:
+\begin{align*}
+    f^{-1}(x_n) = \varnothing      &\quad (\text{i.e. }\forall y \in Y: f(y) \not = x_n)\\
+    f^{-1}(x_n) \not = \varnothing &\quad (\text{i.e. }\exists y \in Y: f(y) = x_n)
+\end{align*}
+Nel primo caso, $f(y)\subseteq X'$ e quindi $f:Y\to X'$ sarebbe
+un'applicazione iniettiva da un insieme equipotente a $I_m$ in
+un insieme equipotente a $I_n$; dato che $m>n+1>n$ questo è assurdo
+per ipotesi di induzione.
+Nel secondo caso, sia $y\in Y$ tale che $f(y)=x_n$ e sia $Y'=Y-\{y\}$.
+Dato che $f$ è iniettiva, $f(Y') \subseteq X'$ e quindi $f|_{Y'}:
+Y'\to X'$ è un'applicazione iniettiva. Dato che $Y'\sim I_{m-1}$,
+$X'\sim I_n$ e $m-1>n$, ciò è assurdo per ipotesi di induzione.
+\cvd
+\end{tcolorbox}
+
+Il lemma dei cassetti prende il nome da un modo intuitivo di interpretarlo:
+se possiedo un certo numero di oggetti da disporre in un certo numero di
+cassetti, più piccolo di quello degli oggetti, allora sicuramente qualche
+cassetto conterrà più di un oggetto.
+In informatica questo concetto, seppur banale, assume un'importanza da non
+sottovalutare: se si conoscono perfettamente tutti i possibili output e
+tutti i possibili input e se questi sono maggiori del numero di output,
+allora, per il lemma dei cassetti, almeno un output sarà condiviso da più
+input.
+
+\begin{osservaz}
+\emph{Qualora dominio e codominio abbiano lo stesso numero di elementi,
+è possibile per una tale applicazione essere bigettiva, semplicemente
+mostrando la sua iniettività. Di fatto il lemma dei cassetti può essere
+riformulato come segue:} se n oggetti vengono distribuiti in n posti
+cosicché ogni posto non riceva più di un oggetto, allora ogni posto
+conterrà uno e un solo oggetto. \emph{Nel teorema di Fermat Eulero
+(\ref{fermateuler}) si farà riferimento a questa formulazione del
+lemma dei cassetti.}
+\end{osservaz}
+
+Dal lemma dei cassetti seguono corollari e definizioni importanti
+relativi alle proprietà degli insiemi finiti.
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Equipotenza tra insiemi finiti}]
+Dati $n,m\in\mathbb{N}, n\not=m$ e $X,Y$ insiemi finiti tali che $|X|=|I_n|$ e $|Y|=|I_m|$,
+allora $X$ e $Y$ non sono equipotenti.
+
+In particolare vale \[ |X|=|I_n|,|X|=|I_m| \Longrightarrow n=m \]
+insieme a \[ X\sim I_n,Y\sim I_m \Longrightarrow (X\sim Y \Leftrightarrow n = m) \]
+\end{tcolorbox}
+Da quest'utlimo corollario si può definire la cardinalità degli insiemi
+finiti.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Cardinalità di un insieme finito}]
+Sia $X$ un insieme finito. Si dice cardinalità di $X$ l'unico numero
+naturale $n$ tale che $|X|=|I_n|$. Tale numero si denota con $|X|$.
+\end{tcolorbox}
+
+Riproponiamo la condizione di equipotenza, in particolare per quanto
+riguarda gli insiemi finiti ed introducendo il linguaggio della cardinalità.
+
+\begin{tcolorbox}[title={Condizione di equipotenza espressa in termini di cardinalità}]
+Dati $X,Y$ insiemi finiti vale
+\[ X\sim Y \Longleftrightarrow |X|=|Y| \]
+\textit{\textbf{Dimostrazione:}} $|X|=|Y|\Longrightarrow \exists n\in\mathbb{N}:
+X\sim I_n, Y\sim I_n\Longrightarrow X\sim Y$ per transitività dell'equipotenza.
+Viceversa se $X\sim Y$ allora essi hanno la stessa cardinalità, per il
+corollario precedente.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={Cardinalità di sottoinsiemi finiti}]
+Sia $X$ un insieme finito e $Y\subseteq X$. Allora anche
+$Y$ è finito e $|Y|\leq|X|$. Se $Y\subsetneqq X$, allora
+$|Y|<|X|$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Equipotenza tra insieme finito e sottoinsieme}]
+Un insieme finito non è equipotente ad alcun suo sottinsieme proprio,
+cioè non esiste alcuna bigezione tra $X$ e $X'\subsetneqq X$.
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{segue in particolare che $\mathbb{N}$ è
+infinito. Per gli assiomi di Peano, si può considerare
+l'applicazione $n\mapsto \text{succ}(n)$; sapendo che 0 non
+possiede alcun predecessore, $\text{succ}$ è una bigezione
+tra $\mathbb{N}$ e il suo sottoinsieme proprio $\mathbb{N}\setminus\{0\}$.
+$\mathbb{N}$ dunque non soddisfa il corollario precedente.}
+\end{osservaz}
+
+
+\teorema{Buon ordinamento}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Minimo]
+Sia $X$ un insieme e sia $\leq$ un ordinamento su $X$. Sia $A \subseteq X$, diremo
+che $z \in A$ è un minimo di $A$ se per ogni $x \in A$ si ha che $z \leq x$.
+\[ z = \min A \Longleftrightarrow z \leq x \quad \forall x \in A \]
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{Non avendo elementi, l'insieme vuoto non ammette minimo.}
+\end{osservaz}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Insieme ben ordinato]
+Un ordinamento totale su un insieme $X$ si dice buon ordinamento se ogni sottoinsieme
+non vuoto di $X$ ammette minimo.
+\[ (X,\leq) \text{ ben ordinato } \Longleftrightarrow \exists \min A \quad \forall A \subseteq X, A \not = \varnothing \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={Buon ordinamento di $\mathbb{N}$}]
+L'ordinamenti dei numeri naturali è un buon ordinamento.
+\[ (\mathbb{N},\leq) \text{ ben ordinato} \]
+\emph{\textbf{Dimostrazione:}} Sia $A \subseteq \mathbb{N}$ che non
+ammette minimo e mostriamo che $A = \varnothing$.
+Sia $B = \mathbb{N}\setminus A$ il complementare di $A$. Si procede per induzione su
+$n \in \mathbb{N}$ considerando la proposizione:
+\[ P(n) := \left(\{0,1,...,n\} \subseteq B\right) \]
+$n=0$ (base dell'induzione) Si osservi che $0 = \min\mathbb{N}$, dunque
+$0 \not \in A$, altrimenti sarebbe il suo minimo,
+allora $0 \in B$ e di conseguenza $\{0\} \subseteq B$.
+
+$n\geq0, n\Longrightarrow n+1$ (passo induttivo)
+Supponiamo che $\{0,...,n\} \subseteq B$ per qualche $n\geq0$ (ipotesi
+induttiva). Allora
+$0,...,n \not \in A$ per ipotesi induttiva, quindi $n+1 \not \in A$,
+altrimenti sarebbe il suo minimo. Quindi $n+1 \in B$ e pertanto
+$\{0,...,n,n+1\} \subseteq B$. Allora $B = \mathbb{N}$, quindi
+$A = \varnothing$.
+\cvd
+\end{tcolorbox}
+
+\teorema{Il principio di induzione di seconda forma}
+
+\begin{tcolorbox}[title={Principio di induzione di seconda forma}]
+Sia $\{P(n)\}_{n \in \mathbb{N}}$ una famiglia di proposizioni
+indicizzate su $\mathbb{N}$ e si supponga che:
+\begin{enumerate}
+    \item $P(0)$ sia vera
+    \item $\forall n > 0 \quad (P(k) \text{ vera } \forall k < n) \Longrightarrow P(n)$
+\end{enumerate}
+Allora $P(n)$ è vera $\forall n \in \mathbb{N}$.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} Sia $A := \{n \in \mathbb{N} | P(n) \text{ falsa} \}$,
+e si supponga per assurdo che $A \not = \varnothing$. Allora per
+la proprietà di buo ordinamento di $\mathbb{N}$, $A$ ammette minimo $m$
+(essendo $A\subseteq\mathbb{N}$ non vuoto). Vale:
+\[ m := \min A \Longrightarrow m \in A \Longrightarrow P(m) \text{ falsa } \Longrightarrow m \not = 0 \]
+che segue da (1).
+
+Se $k \in \mathbb{N}: 0 \leq k < m = \min A$ allora $k \not \in A$. Ma
+allora $P(k)$ è vera. Per (2), segue che $P(m)$ è vera, ma si ottiene
+così una contraddizione. Deve dunque essere necessariamente $A = \varnothing$,
+ovvero $P(n)$ vera $\forall n \in \mathbb{N}$.
+\cvd
+\end{tcolorbox}
+
+\chptr{Interi, Divisione, Rappresentabilità dei Naturali}
+\section{I numeri interi in questo corso}
+L'insieme dei numeri interi si denota col simbolo $\mathbb{Z}$
+(dal tedesco \textit{Zahl}). Non verrà qui trattata nel dettaglio
+la sua struttura, al contrario dei naturali, ma ci limitiamo a
+dire che gli interi e le loro operazioni sono definibili per
+estensione dai naturali.
+
+
+\teorema{Divisione euclidea}
+\begin{tcolorbox}[title={Teorema della divisione euclidea}]
+\[
+    n,m \in \mathbb{Z}: m\not=0 \quad \Longrightarrow \quad \exists! q,r\in \mathbb{Z}:
+    \begin{cases}
+        n = qm + r\\
+        0 \leq r < |m|
+    \end{cases}
+\]
+\emph{\textbf{Dimostrazione:}} \underbar{\emph{Esistenza:}} procediamo
+per casi. Si consideri dapprima $n,m \in \mathbb{N}$ ($n \geq 0, m > 0$)
+e si proceda per induzione, seconda forma, su $n\in\mathbb{N}$.
+
+Se $n = 0$ (base dell'induzione) è sufficiente prendere $q = 0 = r$. Il
+sistema della tesi è infatti soddisfatto.
+
+Si supponga ora che $n > 0$ e che la tesi sia vera $\forall k < n$.
+Se $n < m$ basta prendere $q = 0$ e $r = n$ (anche qui le condizioni
+del sistema sono soddisfatte). Altrimenti si ponga $k = n - m$, dato
+che $m > 0$ e pertanto si ha $0 \leq k < n$,
+quindi per ipotesi induttiva $\exists q,r \in \mathbb{Z}$ tali che:
+\[ 
+    \begin{cases}
+        k = qm + r\\
+        0 \leq r < m = |m|
+    \end{cases}
+\]
+Ma allora $n = k + m = qm + r + m = (q+1)m + r$ e il passo induttivo
+è verificato.
+
+Si consideri ora il caso $n < 0$ e $m > 0$. Allora $-n > 0$ e quindi
+per il caso precedente esistono $q,r \in \mathbb{Z}$ tali che
+$-n = qm + r$ e $0 \leq r < m = |m|$. Per ricondurci alla forma della
+tesi, si pone $n = (-q)m - r$. Per sistemare $r$, nel caso $r = 0$ si
+soddisfano le condizioni per raggiungere la tesi, se $0 < r < m$ allora
+$0 < m - r < m = |m|$ ($m - r$ è pertanto il resto cercato) e:
+\[ n = (-q)m - r = (-q)m - m + m - r = (-q - 1)m + (m - r) \]
+Infine, se $m < 0$ allora $-m > 0$, quindi per i due casi precedenti
+$\exists q,r \in \mathbb{Z}$ tali che:
+\[ n = q(-m) + r = (-q)m + r \qquad \text{con } 0 \leq r < -m = |m| \]
+\underbar{\emph{Unicità:}} supponiamo che
+$qm + r = n = q'm + r'$ e che, a meno di scambiare $r$ e $r'$, $0 \leq r,r' < |m|$.
+Supponiamo che $r' \geq r$, allora:
+\[ qm + r = q'm + r' \Longleftrightarrow (q - q')m = r'-r \]
+\[ \therefore \]
+\[ |q-q'||m| = |r'-r| = r'-r < |m| \Longleftrightarrow 0 \leq |q-q'| < 1 \]
+Ma dal momento che $q,q' \in \mathbb{Z}$:
+\[
+    |q-q'| = 0 \Longleftrightarrow q = q' \quad \Longrightarrow \quad qm + r = q'm + r' \Longrightarrow r = r'
+\]
+
+\cvd
+\end{tcolorbox}
+La dimostrazione del teorema costituisce il procedimento alla base
+dell'algoritmo ricorsivo per il calcolo del quoziente e del resto
+della divisione intera.
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Algoritmo di divisione euclidea]
+
+\end{tcolorbox}
+
+\teorema{Rappresentazione dei naturali in base arbitraria}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Rappresentabilità dei naturali in base arbitraria]
+Sia $b\in\mathbb{N}$. Diremo che $n\in\mathbb{N}$ è rappresentabile in base $b$ see
+esistono $\varepsilon_0,...,\varepsilon_k\in I_b=\{0,...,b-1\}$ tali che:
+\[ n=\varepsilon_0b^0+...+\varepsilon_k b^k = \sum_{i=0}^{k}\varepsilon_ib^i \]
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{È importante notare che nessun numero è rappresentabile in base 0, perché
+$I_0 = \varnothing$ e dunque non esistono simboli che possono rappresentare
+i numeri. L'unico naturale rappresentabile in base 1 è 0.}
+\end{osservaz}
+
+La rappresentabilità è esprimibile in maniera alternativa, come si vede dal seguente teorema:
+\begin{tcolorbox}[title={Teorema di rappresentazione dei naturali in base arbitraria}]
+Sia $b \in \mathbb{N}:b \geq 2$. Allora ogni
+$n \in \mathbb{N}$ è rappresentabile univocamente nella base $b$.
+Ossia esiste una successione $\{\varepsilon_i\}_{i \in \mathbb{N}}$:
+\begin{enumerate}
+    \item definitivamente nulla ($\exists i_0 \in \mathbb{N}: \varepsilon_i = 0 \quad \forall i > i_0$)
+    \item $\varepsilon_i \in I_b \quad \forall i \in \mathbb{N}$ ($0 \leq \varepsilon_i < b$, di tipo resto)
+    \item $n = \sum_{i = 0}^{\infty} \varepsilon_i b^i$ (per la (1) tale serie è finita)
+\end{enumerate}
+e se $\{\varepsilon'_i\}_{i \in \mathbb{N}}$ è un'altra
+successione che soddisfa gli stessi punti, allora $\varepsilon_i =
+\varepsilon'_i \quad \forall i \in \mathbb{N}$.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} Sia fissato $b\in\mathbb{N}:b\geq2$.
+
+\underbar{\emph{Esistenza:}} Si procede per induzione, seconda forma, su $n \in \mathbb{N}$.
+
+Se $n = 0$ basta scegliere una successione tale che $\varepsilon_i = 0 \quad \forall i \in \mathbb{N}$.
+
+Assumiamo ora $n > 0$ e si supponga che la tesi sia vera $\forall k < n$.
+Si consideri la divisione euclidea tra $n,b$: siano $q,r$ tali che $n = qb + r$
+con $0 \leq r < b$. Essendo inoltre $b \geq 2$ vale: $0 \leq q < qb \leq qb + r = n$
+e quindi, per ipotesi di induzione, eiste una successione definitivamente
+nulla $\{\delta_i\}$ costituita di interi tali che
+$0 \leq \delta_i < b \quad \forall i$
+e tale che $q = \sum_{i=0}^{\infty}\delta_i b^i$. Segue che:
+
+\[ n = qb + r = \left(\sum_{i=0}^{\infty}\delta_i b^i\right)b + r = \sum_{i=0}^{\infty}\delta_i b^{i+1} + r = \sum_{j=1}^{\infty} \delta_{j-1}b^j + \varepsilon_0 = \sum_{i=0}^{\infty}\varepsilon_i b^i \]
+
+(Si noti che si è posto $\varepsilon_0 = \varepsilon_0 b^0 = r$ e
+$\varepsilon_i = \delta_{j-1} \quad \forall i,j > 0$).
+La successione $\{\varepsilon_i\}$ è definitivamente nulla, essendo
+tale $\{\delta_i\}$ e inoltre $0 \leq \varepsilon_i = \delta_{j-1} < b
+\quad \forall i,j > 0$ e $0 \leq \varepsilon_0 = r < b$.
+$\newline$
+\underbar{\emph{Unicità:}} Si procede per induzione su $n \in \mathbb{N}$.
+
+Se $n = 0 = \sum_{i} \varepsilon_i b^i$ allora ogni addendo della somma,
+essendo non negativo ($b \geq 2, \varepsilon_i \in I_b \quad \forall i$), necessariamente deve essere nullo, pertando si
+ha $\varepsilon_i = 0 \quad \forall i$.
+
+Si assuma ora $n > 0$ e si suppanga che, $\forall k < n$, l'espressione
+in base $b$ sia unica. Sia $n$ tale che:
+\[
+    n = \sum_{i=0}^{\infty}\varepsilon_i b^i = \sum_{i=0}^{\infty}\varepsilon'_i b^i \quad \Longrightarrow \quad
+    n = \left(\sum_{i=1}^{\infty}\varepsilon_i b^{i-1}\right)b + \varepsilon_0 = \left(\sum_{i=1}^{\infty}\varepsilon'_i b^{i-1}\right)b + \varepsilon'_0
+\]
+Per l'unicità della divisione euclidea, si ha che $\varepsilon_0 = \varepsilon'_0$
+e $\sum_{i=1}^{\infty}\varepsilon_i b^{i-1} = q = \sum_{i=1}^{\infty}\varepsilon'_i b^{i-1}$.
+Vale $q < n$ (si veda l'esistenza) e pertanto, per ipotesi di induzione,
+$\varepsilon_i = \varepsilon'_i \quad \forall i \geq 1$.
+\cvd
+\end{tcolorbox}
+In informatica si incontrano spesso numeri rappresentati in basi
+diverse da quella decimale, in modo particolare binaria, ottale
+ed esadecimale. Tutto questo è possibile perché il teorema precedente
+lo garantisce, sia nella capacità di rappresentare i numeri che
+nell'unicità di tali rappresentazioni.
+
+Come per la divisione euclidea, la dimostrazione di questo teorema
+mostra un procedimento ricorsivo per il calcolo della stringa che
+rappresenta il numero naturale preso in esame data una certa base.
+
+\chptr{Sulla Divisibilità in $\mathbb{Z}$}
+\section{Divisibilità in $\mathbb{Z}$ e prime proprietà}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Divisibilità]
+Dati $n,m \in \mathbb{Z}$ si dice che $n$ è un divisore di
+$m$ (o che $m$ è un multiplo di $n$) se esiste un $k \in \mathbb{Z}$
+tale che $m = kn$:
+\[ n|m \quad \Longleftrightarrow \quad \exists k \in \mathbb{Z}: m = kn\]
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{Dalla definizione valgono le seguenti:
+\begin{enumerate}
+    \item $n|0 \quad \forall n \in \mathbb{Z}$
+    \item $n \not = 0 \Longrightarrow 0 \not | n$
+    \item $0|0$
+    \item $\pm 1 | n$, $\pm n|n \qquad \forall n \in \mathbb{Z}$
+\end{enumerate}}
+\end{osservaz}
+
+\begin{tcolorbox}[title={Proprietà della divisibilità}]
+Dati $n,m\in\mathbb{Z}$ valgono
+\begin{enumerate}
+    \item $n|m$, $m|q \quad \Longrightarrow \quad n|q$
+    \item $n|m$, $m|n \quad \Longrightarrow \quad n = \pm m$
+\end{enumerate}
+\textit{\textbf{Dimostrazione:}}
+\begin{enumerate}
+    \item $n|m \Rightarrow m = kn$, $m|q \Rightarrow q = hm = (hk)n \qquad \Longrightarrow \qquad n|q$
+    \item $n|m \Rightarrow m = kn$, $m|n \Rightarrow n = hm \quad \Longrightarrow \quad m = khm \Longleftrightarrow m(1-kh) = 0 \quad \therefore \quad$ $m = 0, n = 0 \because n = hm$ oppure
+    $1 - kh = 0 \Longrightarrow h = k = \pm 1 \therefore n = \pm m$
+\end{enumerate}
+\cvd
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=violet!30, colframe=violet!30!black, title={Lemma utile}]
+Siano $c,n,m\in\mathbb{Z}:c|n,c|m$. Allora $c$ divide ogni combinazione lineare
+in $\mathbb{Z}$ tra $n$ e $m$:
+\[ c|xn+ym \quad \forall x,y\in\mathbb{Z} \]
+\textit{\textbf{Dimostrazione:}} \[c|n,c|m \Longrightarrow \exists
+h,k\in\mathbb{Z}:n=ch,m=ck \Longrightarrow xn+ym=xch+yck=c(xh+yk) \Longrightarrow c|xn+ym \]
+\cvd
+\end{tcolorbox}
+
+\teorema{Definizione, esistenza e unicità del massimo comun divisore}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Massimo Comun Divisore]
+Dati $n,m \in \mathbb{Z}$ non entrambi nulli e $c\in\mathbb{Z}$, si dice che
+$M = (n,m)$ è \textit{il} massimo comun divisore di $n$ e $m$ se:
+\begin{enumerate}
+    \item $M>0$
+    \item $M|n$ e $M|m$
+    \item $\forall c\in\mathbb{Z}:c|n, c|m \Longrightarrow c|M$
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[title={Esistenza e unicità del massimo comun divisore}]
+Dati $n,m \in \mathbb{Z}$ non entrambi nulli eiste unico il loro
+massimo comun divisore: \[ n,m \in \mathbb{Z}: n \not = 0 \vee m \not = 0 \Longrightarrow \exists! M = (n,m) \]
+\emph{\textbf{Dimostrazione:}} \underbar{\emph{Esistenza:}} Si consideri l'insieme
+\[S := \{s \in \mathbb{Z}| s > 0, \exists x,y \in \mathbb{Z}: s = xn + ym\}\]
+Possiamo asserire che $S \not = \varnothing$, perché vale $nn + mm > 0$
+(si ricorda che $n,m$ non sono entrambi nulli). Poiché $S$ è un sottoinsieme non vuoto
+di $\mathbb{N}$, grazie al teorema del buon ordinamento di $\mathbb{N}$, $S$
+ammette minimo. Sia $d:= \min S = xn + ym$, per qualche $x,y\in\mathbb{Z}$ e dimostriamo che
+$d$ è il MCD. Vale $d\in S\Longrightarrow d>0$ (definizione (1)). Sia \[ c\in\mathbb{Z}:
+c|n,c|m \Longleftrightarrow \exists h,k\in\mathbb{Z}:n=kc,m=hc \Longrightarrow d=xkc+yhc=(xk+yh)c \Longrightarrow c|d \]
+(definizione (2)).  Dimostriamo che $d|n$.
+Si consideri la divisione euclidea tra $n$ e $d$: $n = qd + r$ con
+$0 \leq r < d$. Se $r > 0$, allora $r = n - qd = n - q(xn + ym) = n(1-qx) +
+m(-qy) \in S$. Ma questo è assurdo, perché $r<d$ e $d = \min S$. Quindi
+$r=0$ cioè $d|n$. Lo stesso ragionamento vale per $d|m$ (definizione (3)).
+
+\underbar{\emph{Unicità:}} Supponiamo che $M,M'$ siano due massimi comun
+divisori di $n,m$. Allora $M'|M$, perché $M|n,M|m$, essendo $M$ divisore
+comune. Ma invertendo i ruoli vale anche $M|M'$, perché anche $M$ si
+suppone essere massimo comun divisore. Per la proprietà della divisibilità,
+allora $M = \pm M'$, ma essendo entrambi i massimi comun divisori di $n$
+e $m$, per definizione $M,M'>0$, quindi $M=M'$.
+\cvd
+\end{tcolorbox}
+Dalla dimostrazione segue che, dati $n,m\in\mathbb{Z}$, esistono
+$x,y\in\mathbb{Z}$ tali che \[ (n,m) = nx + my \]
+e che gli interi che sono combinazione lineare di $n$ e $m$ sono       
+tutti e soli multipli di $(n,m)$. È altresì importante notare che:
+\begin{enumerate}
+\item La nozione di divisibilità non dipende dai segni:
+\begin{align*}
+    &n|m \Longleftrightarrow \exists k\in\mathbb{Z}:m=kn \Longleftrightarrow \exists k\in\mathbb{Z}:m=(-k)(-n) \Longleftrightarrow -n|m\\
+    &\Longleftrightarrow\\
+    &\exists k\in\mathbb{Z}:-m=(-k)n=k(-n) \Longleftrightarrow n|-m,-n|-m\\
+    &\Longleftrightarrow\\
+    &(n,m) = (-n,m) = (-n,-m) = (|n|,|m|)
+\end{align*}
+\item La definizione di massimo comun divisore non dipende dall'ordine
+di $n$ e $m$: \[ (n,m)=(m,n) \]
+\item Siano $n,m\in\mathbb{Z}$ non entrambi nulli. Allora
+\[ (n,m)=\max\{c\in\mathbb{Z}| c|n,c|m\} \]
+\item Sia $n\in\mathbb{Z}\setminus\{0\}$. Vale \[ (n,0)=|n| \]
+\end{enumerate}
+
+\section{Algoritmo di euclide per il calcolo del massimo comun divisore}
+\begin{tcolorbox}[title=Algoritmo di Euclide]
+Siano:
+\begin{enumerate}
+    \item $n,m \in \mathbb{Z}$
+    \item $n = qm + r$ la divisione euclidea di $n$ per $m$
+    \item $\mathcal{A} := \{c \in \mathbb{Z}| c|n, c|m\}$, $\mathcal{B} := \{c\in \mathbb{Z}| c|m, c|r\}$
+\end{enumerate}
+Allora $\mathcal{A} = \mathcal{B}$ e in particolare $(n,m) = (m,r)$.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} mostriamo che $\mathcal{A}\subseteq\mathcal{B}$.
+Sia $c\in\mathcal{A}$. Vale:
+\[ c\in\mathcal{A} \Longleftrightarrow c|n,c|m \Longleftrightarrow \exists h,k\in\mathbb{Z}:n=hc,m=kc \Longrightarrow r=n-qm=hc-qkc=(h-qk)c \Longrightarrow c|r \Longrightarrow c\in\mathcal{B} \]
+
+Mostriamo che $\mathcal{B}\subseteq\mathcal{A}$. Sia $c \in \mathcal{B}$. Vale:
+\[ c\in\mathcal{B} \Longleftrightarrow c|m,c|r \Longleftrightarrow \exists h,k\in\mathbb{Z}:m=hc,r=kc \Longrightarrow n=qm+r=qhc+kc=(qh+k)c \Longrightarrow c|n \Longrightarrow c\in\mathcal{A} \]
+
+Segue che \[ \mathcal{A}\subseteq\mathcal{B},\mathcal{B}\subseteq\mathcal{A}\Longrightarrow\mathcal{A}=\mathcal{B} \]
+
+In particolare, per il teorema di esistenza e unicità del MCD e l'Osservazione
+(3) di questa sezione, segue che $(n,m) = \max \mathcal{A} = \max \mathcal{B} = (m,r)$.
+\cvd
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Impiegare l'Algoritmo di Euclide]
+
+\end{tcolorbox}
+
+
+
+\section{Numeri coprimi e primi}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Numeri coprimi]
+$n,m \in \mathbb{Z}$ non entrambi nulli si dicono coprimi se vale:
+\[(n,m)=1\]
+\end{tcolorbox}
+\begin{osservaz}
+\emph{$(n,m) = 1 \Longleftrightarrow \exists x,y \in \mathbb{Z}:
+nx + my = 1$. In particolare, $(n,n+1)=1$; infatti $1 = (n+1)1 + n(-1)$.}
+\end{osservaz}
+Avendo introdotto il massimo comun divisore, è ora possibile mostrare
+una loro proprietà che permette di metterli in relazione con i
+numeri coprimi. Siano infatti $n,m\in\mathbb{Z}$ non entrambi nulli.
+Vale allora \[ \left(\frac{n}{(n,m)},\frac{m}{(n,m)}\right) = 1 \]
+ovvero, dividendo $n$ e $m$ per il loro massimo comun divisore, si ottengono
+numeri tra loro coprimi. La dimostrazione è la seguente:
+\[ d = (n,m) \Longleftrightarrow \exists x,y\in\mathbb{Z}: d = nx + my \therefore \frac{d}{d} = \frac{nx+my}{d} \Longleftrightarrow 1 = \frac{n}{d}x + \frac{m}{d}y \]
+\cvd
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Numero primo]
+Il numero $p \geq 2$ si dice primo se i suoi unici divisori sono $\pm 1, \pm p$.
+\[ p \text{ primo} \Longleftrightarrow \nexists c\in\mathbb{Z}, c\not=\pm1, c\not=\pm p: c|p, \quad p\geq2 \]
+\end{tcolorbox}
+
+I numeri coprimi godono di alcune proprietà che verranno sfruttate
+in dimostrazioni successive. Siano $n,m,q\in\mathbb{Z}$ con $n,m$
+non entrambi nulli. Valgono:
+\begin{enumerate}
+\item $(n,m) = 1 \text{ e } n|mq \Longrightarrow n|q$
+\item $(n,m) = 1 \text{ e } n|q \text{ e } m|q \Longrightarrow nm|q$
+\end{enumerate}
+\textit{\textbf{Dimostrazione:}}
+\begin{enumerate}
+\item $(n,m)=1\Rightarrow\exists x,y\in\mathbb{Z}:(n,m)=xn+ym=1\Rightarrow q=qxn+qym\Rightarrow n|mq\Rightarrow\exists h\in\mathbb{Z}:mq=nh\Rightarrow q=qxn+ynh = n(qx+yh)\Rightarrow n|q$
+\item $n|q\Rightarrow\exists h\in\mathbb{Z}:q=nh \quad\Rightarrow\quad m|q=nh, (n,m)=1\stackrel{\text{(1)}}{\Longrightarrow} m|h \Rightarrow\exists k\in\mathbb{Z}:h=km\Rightarrow q=nh=nmk\Rightarrow nm|q$
+\end{enumerate}
+\cvd
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title=Condizione alternativa di primalità]
+\[ p \text{ primo} \Longleftrightarrow \forall n,m\in\mathbb{Z}:(p|nm\Rightarrow p|n \text{ o } p|m) \]
+\end{tcolorbox}
+
+Citiamo un'ulteriore proprietà sui numeri primi, della quale si
+farà menzione più avanti.
+
+\[ n_1,n_2,\dots,n_k\in\mathbb{Z}, p \text{ primo}: p|n_1n_2\dots n_k \Longrightarrow \exists i\in\{1,\dots,k\}:p|n_i \]
+
+\teorema{Definizione, esistenza e unicità del minimo comune multiplo}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Minimo Comune Multiplo]
+Siano $n,m \in \mathbb{Z}$. Un numero intero $M$ è il minimo
+comune multiplo tra $n$ e $m$ se:
+\begin{enumerate}
+    \item $M \geq 0$
+    \item $n|M$ e $m|M$
+    \item $\forall c \in \mathbb{Z}: n|c, m|c \Longrightarrow M|c$
+\end{enumerate}
+Si utilizzerà il simbolo $[n,m]$ per indicare tale $M$.
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[title={Esistenza e Unicità del Minimo Comune Multiplo}]
+Dati $n,m\in\mathbb{Z}$, esiste unico il loro minimo comune multiplo:
+\[ n,m \in \mathbb{Z} \Longrightarrow \exists!M=[n,m] \]
+Nota: $n = m = 0 \Longrightarrow [n,m] = 0$. Per $n,m$ non entrambi nulli:
+$[n,m] = \frac{nm}{(n,m)}$
+$\\\\$
+\emph{\textbf{Dimostrazione:}} \underline{\textit{Esistenza}}
+L'unico multiplo di 0 è sé stesso, dunque se $n=0=m$ basta porre
+$[n,m]=0$. Sia $M = \frac{nm}{(n,m)} = n'm'(n,m)$. Si è posto $n = n'(n,m)$ e
+$m = m'(n,m)$. Segue che: $M = nm' = n'm$ e allora $n|M$ e $m|M$.
+
+Sia $c\in\mathbb{Z}:n|c,m|c$. Allora $(n,m)|c$
+\footnote{Per definizione $(n,m)|n,(n,m)|m \Rightarrow \exists h,k\in\mathbb{Z}:n=h(n,m),m=k(n,m)$.
+Quindi se esiste $c$ tale che $n|c,m|c$ allora $c=in=i(n,m),c=jm=jk(n,m)$ per qualche $i,j\in\mathbb{Z}$.
+Dunque $(n,m)|c$.}.
+Ponendo $c = c'(n,m)$ segue $n'|c'$ e $m'|c'$. Essendo $(n',m')=1$ per
+proprietà dei coprimi, grazie ancora alle proprietà dei coprimi $n'm'|c'$
+quindi
+\[M = n'm'(n,m)| c'(n,m) = c\]
+
+\underline{\textit{Unicità:}} Supponiamo che $M,M' \in \mathbb{Z}$
+siano due minimi comuni multipli per $n,m$. Da (2) e (3) della
+definizione segue che $M|M'$ ma anche, scambiando i ruoli, $M'|M$.
+Ma allora, per la proprietà della divisibilità, deve essere
+$M = \pm M'$. Ma per (1) della definizione necessariamente segue
+che $M = M'$.
+\cvd
+\end{tcolorbox}
+
+\teorema{Teorema fondamentale dell'aritmetica}
+\begin{tcolorbox}[title={Teorema Fondamentale dell'Aritmetica}]
+Ogni naturale $n \geq 2$ può essere fattorizzato in numeri primi (positivi),
+ovvero può essere scritto come prodotto di numeri primi eventualmente ripetuti:
+\[n = p_1p_2 \dots p_a  \quad (a \geq 1 \text{ e } p_i \text{ primo}) \]
+Inoltre questa scrittura è unica a meno di riordinamento, ovvero:
+$n = q_1 \dots q_b$, dove $q_j$ sono primi e $b \geq 1$, allora esiste
+una bigezione $\varphi: \{1,...,a\} \to \{1,...,b\}$ tale che
+$q_j = p_{\varphi(j)}$.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} \underbar{\emph{Esistenza:}} Si procede per induzione di seconda
+forma su $n \geq 2$, considerando la proposizione $P(n) = $ "il numero naturale $n$ si può scrivere
+$n = p_1...p_a$ per qualche $p_1,...,p_a$ primi eventualmente ripetuti".
+
+$n = 2$ (base): $n = 2$ è un numero primo, quindi $a = 1$, $p_1 = n = 2$, quindi
+$n = p_1 = 2$.
+
+$n > 2, \forall 2 \leq k < n \Rightarrow n$ (passo induttivo): sia $n > 2$.
+Assumiamo di saper scrivere ciascun $2\leq k < n$ come
+prodotto di numeri primi eventualmente ripetuti (ipotesi induttiva). Dobbiamo
+provare che anche $n$ ammette una tale fattorizzazione. Se $n$ è primo, allora
+$a = 1$ e $p_1 = n$, quindi $n = p_1$. Supponiamo che $n$ non sia primo, allora
+$n = d_1d_2$ con $2 \leq d_1,d_2 < n$, quindi per ipotesi induttiva $d_1 = p_1...p_a$
+e $d_2 = q_1...q_b$ ($a,b\geq1$ con $p_1,...,p_a,q_1,...,q_b$ numeri primi eventualmente
+ripetuti). Ma allora $n = d_1d_2 = p_1...p_aq_1...q_b$.
+
+\underbar{\emph{Unicità:}} Supponiamo che esista $n \geq 2$ con due fattorizzazioni:
+$n = p_1...p_a = q_1...q_b$ per qualche $p_1,...,p_a$, $q_1,...,q_b$ primi
+eventualmente ripetuti. Dobbiamo provare che $a=b$ e $p_i = q_i \quad \forall
+i \in \{1,...,a\}$ a meno di riordinamento. Osserviamo che $a \leq b$. Si
+procede per induzione (prima forma) su $a \geq 1$ considerando $P(a) =$ "per
+ogni $b \geq a$, per ogni $p_1,...,p_a,q_1,...,q_b$ primi tali che $p_1...p_a = q_1...q_b$;
+allora $a=b$ e, a meno di riordinamento, $p_i = q_i \quad \forall i \in \{1,...,a\}$".
+
+$a=1$ (base) Sia $b \geq 1$ e siano $p_1,q_1,...,q_b$ numeri primi tali che
+$p_1 = q_1...q_b$. Dobbiamo provare che $b=1$ e $p_1 = q_1$. Supponiamo per
+assurdo che $b \geq 2$. Vale: $p_1 = q_1(q_2...q_b)$, cioè $q_1|p_1$. Ma dal
+momento che essi sono numeri primi, deve essere $p_1 = q_1$,
+ma qindi $1 = q_2...q_b$, che è assurdo.
+
+$a \geq 1, a \Rightarrow a+1$ (passo induttivo) Supponiamo che, dati $p_1,...,p_a,
+q_1,...,q_b$ numeri primi con $b \geq a$ e $p_1...p_a = q_1...q_b$. Allora
+assumiamo che $a=b$ e, a meno di riordinamento, $p_i = q_i \quad \forall i \in \{1,...,a\}$
+(ipotesi induttiva). Dobbiamo dimostrare che: $P(a+1)= $"sia $b \geq a+1$ e siano
+$p_1,...,p_{a+1},q_1,...,q_b$ primi tali che $p_1...p_{a+1} = q_1...q_b$.
+Allora $b = a+1$ e $p_i = q_i \quad \forall i \in \{1,...,a+1\}$
+a meno di riordinamento". Vale: $p_{a+1}|p_1...p_{a+1} = q_1...q_b$, ma per
+l'esercizio 10.1 $\exists i \in \{1,...,b\}: p_{a+1}|q_i$. A meno di riordinare
+gli indici, supponiamo qui che $p_{a+1}|q_b$. Ma allora $p_{a+1} = q_b$ (ci si
+ritrova nella stessa situazione della base). Segue che:
+\[ p_1...p_ap_{a+1} = q_1...q_{b-1}q_b \quad \Rightarrow \quad  p_1...p_a = q_1...q_{b-1} \]
+Ma $a \leq b-1 \Leftrightarrow a+1 \leq b$: per ipotesi induttiva $a = b-1$ e,
+a meno di riordinamento, $p_i = q_i \quad \forall i \in \{1,...,a\}$. Pertanto
+$a+1 = b$ e $p_i = q_i \quad \forall i \in \{1,...,a,a+1\}$.
+
+Verificato il passo induttivo, possiamo concludere che, grazie al principio di
+induzione di prima forma, la fattorizzazione è unica a meno di riordinamento
+$\forall n \geq 2$.
+\cvd
+\end{tcolorbox}
+\section*{Perché 1 non è Primo?}
+Con molta probabilità, alcuni lettori si saranno posti suddetta domanda. Di fatto
+1 è divisibile solamente per sé stesso, dunque anche per 1, ma dalla definizione
+potrebbe non essere del tutto chiara la ragione per cui i numeri primi
+sono maggiori o uguali a 2. Ora che abbiamo illustrato il teorema fondamentale
+dell'aritmetica, possiamo rispondere mostrando la ragione matematicamente
+formale di questa scelta convenzionale: assumere 1 come numero primo violerebbe
+la condizione di unicità della fattorizzazione. Si veda infatti, nella dimostrazione,
+la base dell'induzione: non si arriverebbe
+all'assurdo se assumessimo $p_1,q_1,...,q_b$ primi incluso 1. Infatti, non ci
+sarebbe modo di dare prova che la fattorizzazione in $q_1,...,q_b$ contenga lo
+stesso numero di elementi dell'altra.
+
+Escludere 1 dall'insieme dei numeri primi permette quindi di conferire più
+solidità e consistenza al concetto di fattorizzazione.
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Infinità di Numeri Primi}]
+L'insieme dei numeri primi è infinito.
+$\\\\$
+\emph{\textbf{Dimostrazione:}} Supponiamo per assurdo che esista solo un certo numero
+finito $n$ di numeri primi $p_1,...,p_n$. Possiamo definire $\aleph:=(p_1...p_n) + 1$.
+Evidentemente $\aleph \in \mathbb{N}$ e $\aleph \geq 2$ (perché prodotto di numeri primi,
+quindi maggiori o uguali a 2). Possiamo quindi applicare a $\aleph$ il teorema
+fondamentale dell'aritmetica, dunque $\aleph$ è il prodotto di alcuni numeri primi
+$\{p_1,...,p_m\}$ eventualmente ripetuti. In particolare, $\exists i \in \{1,...,m\}:
+p_i|\aleph$, ovvero se divido $\aleph$ per $p_i$ ottengo resto 0. Ma dal momento che qui i
+numeri primi sono finiti, allora possiamo supporre:
+\[ \aleph = (p_1...p_{i-1}p_{i+1}...p_n)p_i + 1 \]
+che è una divisione euclidea con $1 = r$, perché $0 \leq 1 < p_i$ ($p_i \geq 2$).
+Si contraddice così l'unicità della divisione euclidea: $r = 1 \not = 0$; insieme
+al teorema fondamentale dell'aritmetica.
+\end{tcolorbox}
+Per convenienza, il teorema fondamentale dell'aritmetica ricorre alla
+rappresentazione esplicita della fattorizzazione, ovvero ripetendo, senza
+introdurre la notazione di potenza, i fattori identici.
+
+\chptr{Sulla Congruenza e l'Aritmetica Modulare}
+\section{Congruenza in Modulo}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Congruenza in Modulo $n$]
+Fissiamo $n \in \mathbb{Z}$. Siano $a,b \in \mathbb{Z}$. Diciamo
+che $a$ è congruo a $b$ modulo $n$ e scriveremo: \[ a \equiv b \Mod{n} \]
+se vale: \[n|(a-b)\]
+\end{tcolorbox}
+
+Uno dei significati intuitivi della congruenza in modulo è il seguente:
+se $a$ è congruo a $b$ modulo $n$, allora il resto della divisione euclidea
+di $a$ per $n$ e quello della divisione euclidea di $b$ per $n$ sono uguali.
+Anche la congruenza è una relazione di equivalenza, che vale su $\mathbb{Z}$.
+Infatti essa gode delle proprietà (si fissa $n\in\mathbb{Z}$):
+\begin{enumerate}
+\item \textbf{Riflessiva:} $\forall a \in \mathbb{Z}, a \equiv a \Mod{n}$
+\item \textbf{Simmetrica:} $\forall a,b \in \mathbb{Z}, a \equiv b \Mod{n} \Longrightarrow b \equiv a \Mod{n}$
+\item \textbf{Transitiva:} $\forall a,b,c \in \mathbb{Z}: a \equiv b \Mod{n}$ e $b \equiv c \Mod{n} \Longrightarrow a \equiv c \Mod{n}$
+\end{enumerate}
+
+\section{Quoziente Insiemistico}
+Prima di procedere con le proprietà della conguenza in modulo, estendiamo
+il discorso sulle relazioni di equivalenza (vedi \ref{relaz}) introducendo nuovi concetti e
+strumenti molto astratti ma altrettanto utili nella trattazione dell'aritmetica
+modulare.
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Classe di Equivalenza]
+Siano $X$ un insieme e $\mathcal{R}$ una relazione di equivalenza
+su $X$. Fissiamo $x \in X$. Definiamo la classe di equivalenza di $x$ in
+$X$ rispetto a $\mathcal{R}$ (oppure classe di $\mathcal{R}-$equivalente
+di $x$, oppure $\mathcal{R}-$classe di $x$):
+\[ [x]_\mathcal{R} := \{y \in X| y \mathcal{R} x\} \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Insieme Quoziente]
+Definiremo l'insieme quoziente di $X$ modulo $\mathcal{R}$ che indicheremo
+con $X/_\mathcal{R}$ ponendo:
+\[ X/_{\mathcal{R}}:= \{[x]_\mathcal{R} \in 2^X | x \in X \} = \bigcup_{x \in X} \{[x]_\mathcal{R}\} \subseteq 2^X \]
+Ovvero l'insieme i cui elementi sono tutte e sole le $\mathcal{R}$-classi in $X$.
+\end{tcolorbox}
+
+\section{Classi di congruenza (o resto)}
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Numero di classi modulo $n$}]
+Se $n>0$ allora $\mathbb{Z}/_{n\mathbb{Z}}$ ha esattamente $n$ elementi:
+\[ |\mathbb{Z}/_{n\mathbb{Z}}| = n \]
+E si ha
+\[ \mathbb{Z}/_{n\mathbb{Z}} = \{[0]_n, [1]_n, ..., [n-1]_n\} = \{[r]_n \in 2^\mathbb{Z}| 0 \leq r < n \} \]
+$\\$
+\emph{\textbf{Dimostrazione:}} Dalla proposizione 11.13 e dalla 2 di
+11.12 segue che l'insieme $\mathbb{Z}/_{n\mathbb{Z}}$
+ha al più $n$ elementi, ovvero $[0]_n,...,[n-1]_n$. D'altra parte se
+$0 \leq h < k < n$ allora $0<k-n<n$ e quindi $n \not | (k-h)$ e
+allora, sempre per la 2 di 11.12, $[h]_n \not = [k]_n$.
+\cvd
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{si presti attenzione ai significati delle
+notazioni: il simbolo $[a]_n$ da solo indica un elemento di $\mathbb{Z}/_{n\mathbb{Z}}$,
+ovvero \textit{dopo} il passaggio al quoziente insiemistico. Per indicare invece
+la sua natura di insieme, si scriverà $[a]_n \subseteq \mathbb{Z}$.}
+\end{osservaz}
+
+
+\section{Struttura algebrica di $\mathbb{Z}/_{n\mathbb{Z}}$}
+Si supponga da qui in poi $n>0$. Siano $a,a',b,b' \in \mathbb{Z}$ tali che:
+$ [a]_n = [a']_n \quad \text{e} \quad [b]_n = [b']_n $.
+Valgono:
+\begin{enumerate}
+\item $[a+b]_n = [a'+b']_n$, ovvero $a+b \equiv a'+b' \Mod{n}$
+\item $[a \cdot b]_n = [a' \cdot b']_n$, ovvero $a \cdot b \equiv a' \cdot b' \Mod{n}$
+\end{enumerate}
+Dalle precedenti proposizioni si possono definire le operazioni di
+somma e prodotto tra classi di resto:
+\begin{align*}
+[a]_n+[b]_n &= [a+b]_n\\
+[a]_n[b]_n &= [ab]_n
+\end{align*}
+Si può altresì dimostrare che le operazioni
+di somma e prodotto tra classi di congruenza godono delle
+stesse proprietà di quelle in $\mathbb{Z}$:
+\begin{enumerate}
+\item \textbf{Associatività:} $([a]_n + [b]_n) + [c]_n = [a]_n + ([b]_n + [c]_n) \qquad ([a]_n[b]_n)[c]_n = [a]_n([b]_n[c]_n)$
+\item \textbf{Commutatività:} $[a]_n + [b]_n = [b]_n + [a]_n \qquad [a]_n[b]_n = [b]_n[a]_n$
+\item \textbf{Distributività:} $[a]_n([b]_n+[c]_n) = [a]_n[b]_n + [a]_n[c]_n$
+\item \textbf{Elemento neutro:} $[a]_n + [0]_n = [a]_n \qquad [a]_n[1]_n = [a]_n$
+\item \textbf{Elemento assorbente:} $[a]_n[0]_n = 0$
+\end{enumerate}
+Tuttavia è interessante notare altre proprietà peculiari:
+\begin{enumerate}
+\item \textit{Classi nulle come prodotto tra classi non nulle:} \[ 2 \cdot 3 = 0 \text{ in } \mathbb{Z}/_{6\mathbb{Z}} \]
+\item \textit{Somma fino a 0:} se $n>0$, allora: \[ \sum_{i=1}^{n} 1 = 0 \quad \text{in } \mathbb{Z}/_{n\mathbb{Z}} \]
+\end{enumerate}
+Da qui il nome intuitivo di \textit{regola dell'orologio}: la caratteristica delle classi
+di resto è proprio il fatto che i numeri che vi appartengono non si trovano su una
+retta o semiretta, bensì su una circonferenza. Fu Gauss ad illustrare per primo
+questa intuizione.
+
+Ricordate dalle elementari quelle regole di divisibilità per 3, 4, 11 e così via?
+Ecco la dimostrazione della regola di divisibilità per 3 (vogliamo mostrare che un
+naturale è divisibile per 3 se e solo se la somma delle sue cifre lo è; la
+dimostrazione delle altre regole è analoga):
+
+$\\$
+\textit{\textbf{Dimostrazione:}} sia $n$ un naturale espresso in base decimale
+le cui cifre sono $\varepsilon_0,...,\varepsilon_k$ dalla meno alla più significativa.
+ricordando il teorema di rappresentabilità in base arbitraria dei naturali, vale:
+\[ [n]_3 = [\varepsilon_0\cdot10^0+...+\varepsilon_k\cdot10^k]_3=[\varepsilon_0]_3[10]^0_3+...+[\varepsilon_k]_3[10]^k_3=[\varepsilon_0][1]^0_3+...+[\varepsilon_k][1]^k_3=[\varepsilon_0+...+\varepsilon_k]_3 \]
+Scrivendo in modo compatto:
+\[ [n]_3 = \left[ \sum_{i=0}^{k}\varepsilon_i10^i \right]_3 = \sum_{i=0}^{k}[\varepsilon_i10^i]_3 = \sum_{i=0}^{k}[\varepsilon_i]_3[10]^i_3 = \sum_{i=0}^{k}[\varepsilon_i]_3[1]^i_3 = \sum_{i=0}^{k}[\varepsilon_i]_3 = \left[\sum_{i=0}^{k}\varepsilon_i\right]_3\]
+Dunque, esprimendo la condizione di divisibilità:
+\[ [n]_3 = [0]_3 \Longleftrightarrow \left[\sum_{i=0}^{k}\varepsilon_i\right]_3 = [0]_3 \]
+\cvd
+
+\teorema{Teorema Cinese del Resto}
+\begin{tcolorbox}[title={Teorema cinese del resto}]
+Siano $n,m>0$ e siano $a,b \in \mathbb{Z}$. Consideriamo il seguente problema:
+\[
+    \begin{cases}
+        x \in \mathbb{Z}\\
+        x \equiv a \Mod{n}\\
+        x \equiv b \Mod{m}
+    \end{cases}
+    \Longleftrightarrow
+    \begin{cases}
+        x \in \mathbb{Z}\\
+        [x]_n = [a]_n\\
+        [x]_m = [b]_m
+    \end{cases}
+\]
+Indichiamo con $S$ l'insieme delle soluzioni del precedente sistema di congruenze:\\
+$S:=\{ x \in \mathbb{Z}| x \equiv a \Mod{n}, x \equiv b \Mod{m} \}$.
+Allora il sistema è compatibile se e solo se $a \equiv b \Mod{(n,m)}$, ovvero:
+\[ S\not = \varnothing \Longleftrightarrow (n,m)|a-b \]
+Assumiamo che $S \not = \varnothing$ e sia $c\in S$. Allora:
+\begin{align*}
+    S &=[c]_{[n,m]} \subseteq \mathbb{Z}\\
+    &=\{ c+k[n,m] \in \mathbb{Z}| k \in \mathbb{Z} \}
+\end{align*}
+
+\emph{\textbf{Dimostrazione:}} \underline{\emph{Compatibilità:}} Assumiamo che
+$S \not = \varnothing \Rightarrow \exists c \in S$ ovvero:
+\[
+    \begin{cases}
+        c \equiv a \Mod{n}\\
+        c \equiv b \Mod{m}
+    \end{cases}
+    \Longleftrightarrow
+    \begin{cases}
+        c = a+kn\\
+        c = b+hm
+    \end{cases}
+\]
+per qualche $h,k \in \mathbb{Z}$. Vale: $ 0 = a+kn - b-hm \Leftrightarrow -kn+hm = a-b $.
+Ma dato che $(n,m)|n$ e $(n,m)|m$, per il lemma utile $(n,m)|-kn+hm = a-b$.
+
+Assumiamo ora che valga $(n,m)|a-b$. Vale, per qualche $k \in \mathbb{Z}$:
+\begin{align}
+    a-b = k(n,m)
+\end{align}
+Applichiamo l'algoritmo di euclide con sostituzione a ritroso ad $n$ e $m$, ottenendo la
+combinazione lineare:
+\begin{align}
+    (n,m) = xn+ym
+\end{align}
+per qualche $x,y \in \mathbb{Z}$. Grazie a (1) e (2) vale:
+\[ a-b=k(n,m)=k(xn+ym)=kxn+kym \quad \Longleftrightarrow \quad a+(-kx)n=b+(ky)m =: c \in S \]
+
+\underline{\emph{Soluzione:}} Sia $c \in S$ e proviamo che $S=[c]_{[n,m]} \subseteq \mathbb{Z}$.
+Mostriamo che $S \subseteq [c]_{[n,m]}$. Sia $c'\in S$. Vale:
+\[ c \in S \Longleftrightarrow
+    \begin{cases}
+        c \equiv a \Mod{n}\\
+        c \equiv b \Mod{m}
+    \end{cases}
+    \Longleftrightarrow
+    \begin{cases}
+        c = a+kn\\
+        c = b+hm
+    \end{cases}
+\]
+\[
+    c' \in S \Longleftrightarrow
+    \begin{cases}
+        c' \equiv a \Mod{n}\\
+        c' \equiv b \Mod{m}
+    \end{cases}
+    \Longleftrightarrow
+    \begin{cases}
+        c' = a+k'n\\
+        c' = b+h'm
+    \end{cases}
+\]
+per qualche $h,h',k,k' \in \mathbb{Z}$. Vale:
+$c'-c=k'n-kn=(k'-k)n \quad \text{e} \quad c'-c=h'm-hm=(h'-h)m$
+\[ \Longleftrightarrow \]
+\[ n|c'-c,m|c'-c \Longrightarrow [n,m]|c'-c \Longleftrightarrow c'\equiv c \Mod{[n,m]} \Longleftrightarrow c' \in [c]_{[n,m]} \]
+Mostriamo che $[c]_{[n,m]} \subseteq S$. Sia $c' \in [c]_{[n,m]}$, ovvero $c'=c+k[n,m]$ per qualche
+$k \in \mathbb{Z}$. Vale:
+\[ [c']_n = [c+k[n,m]]_n = [c]_n + [k[n,m]]_n = [a]_n + [k]_n \cdot [[n,m]]_n = [a+k\cdot 0]_n = [a]_n \]
+Lo stesso procedimento vale per $m$: $[c']_m = [b]_m$. Dunque $c'\in S$.
+\cvd
+\end{tcolorbox}
+
+\section{Invertibilità}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Invertibilità in modulo]
+Siano $a,n \in \mathbb{Z}$ con $n>0$. Diremo che $a$ è invertibile modulo
+$n$ oppure $[a]_n$ è invertibile in $\mathbb{Z}/_{n\mathbb{Z}}$ se esiste
+$x \in \mathbb{Z}$ tale che: \[ xa \equiv 1 \Mod{n} \]
+Cioè: \[ [x]_n[a]_n = [1]_n \]
+In questo caso si dice che $x$ è un inverso di $a$ modulo $n$ e $[x]_n$ è
+una \textit{classe inversa} di $[a]_n$ in $\mathbb{Z}/_{n\mathbb{Z}}$:
+\[ [x]_n = [a]_n^{-1} \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={Unicità della classe inversa}]
+Supponiamo che $a$ sia invertibile modulo $n$, ovvero $[a]_n$ invertibile
+in $\mathbb{Z}/_{n\mathbb{Z}}$. Allora:
+\[ \exists! [x]_n \in \mathbb{Z}/_{n\mathbb{Z}}: [x]_n[a]_n = [a]_n[x]_n=[1]_n\]
+Inoltre la classe $[x]_n \subseteq \mathbb{Z}$ è costituita da tutti i soli
+gli inversi di $a$ modulo $n$.
+$\\\\$
+\textit{\textbf{Dimostrazione:}} Supponiamo che $[x]_n, [x']_n$ siano due
+classi inverse $[a]_n$ in $\mathbb{Z}/_{n\mathbb{Z}}$. Ovvero:
+\begin{align*}
+    [x]_n[a]_n  &=[a]_n[x]_n =[1]_n\\
+    [x']_n[a]_n &=[a]_n[x']_n =[1]_n
+\end{align*}
+Vale:
+\[ [x]_n = [x]_n[1]_n = [x]_n([a]_n[x']_n) = ([x]_n[a]_n)[x']_n = [1]_n[x']_n = [x']_n \]
+\cvd
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={Condizione di invertibilità}]
+Un intero è invertibile modulo $n$ se e solo se è coprimo con $n$:
+\[ a \in \mathbb{Z} \text{ è invertibile } \Mod{n} \quad \Longleftrightarrow \quad (a,n) = 1 \]
+\textit{\textbf{Dimostrazione:}}
+\cvd
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{grazie a questa proposizione,
+si può determinare la classe inversa di $a$ applicando l'algoritmo di
+Euclide ad $a$ e $n$:
+\begin{enumerate}
+    \item Calcolare il MCD tra $a$ e $n$ con sostituzione "a ritroso": $xa + yn = 1$.
+    \item $xa + yn = 1 \Longrightarrow [xa+yn]_n = [1]_n \Longrightarrow [x]_n[a]_n + [y]_n[n]_n = [1]_n \Longrightarrow [x]_n[a]_n = [1]_n$
+\end{enumerate}
+La classe inversa è quindi data dal coefficiente di $a$ ($x$).}
+\end{osservaz}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Insieme degli elementi invertibili]
+Dato $n \in \mathbb{N}\setminus\{0\}$, indichiamo con \[(\mathbb{Z}/_{n\mathbb{Z}})^* = \{[a]_n\in\mathbb{Z}/_{n\mathbb{Z}}|0\leq a <n, (a,n)=1\} \]
+l'insieme di tutti gli interi$\Mod{n}$, cioè $[a]_n \in \mathbb{Z}/_{n\mathbb{Z}}$,
+che siano invertibili in $\mathbb{Z}/_{n\mathbb{Z}}$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Invertibilità e numeri primi}]
+Se $p$ è primo, allora ogni elemento non nullo di $(\mathbb{Z}/_{p\mathbb{Z}})^*$ è invertibile:
+\[ (\mathbb{Z}/_{p\mathbb{Z}})^* = \{[1]_p,...,[p-1]_p\} = \mathbb{Z}/_{p\mathbb{Z}} \setminus \{[0]_p\} \]
+\textit{\textbf{Dimostrazione:}} $[0]_p \not \in (\mathbb{Z}/_{p\mathbb{Z}})^*$
+altrimenti $\exists x \in \mathbb{Z}: [x]_p[0]_p = [1]_p \Longleftrightarrow 0 \equiv 1 \Mod{p}
+\Longleftrightarrow p | 1-0$, ma per definizione $p\geq2$, quindi non è possibile. Se
+$a\not=0$ in $\mathbb{Z}/_{p\mathbb{Z}}$ allora $p\not|a$ e quindi,
+dato che $p$ è primo, $(p,a)=1$.
+\cvd
+\end{tcolorbox}
+\begin{osservaz}
+\emph{vale quindi $|(\mathbb{Z}/_{p\mathbb{Z}})^*| = p-1$.}
+\end{osservaz}
+
+
+\section{La funzione $\Phi$ di eulero}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Funzione $\Phi$ di Eulero]
+Definiamo la funzione $\Phi: \mathbb{N} \setminus \{0\} \to \mathbb{N}$, detta
+\emph{phi} di Eulero: \[ \Phi(n) := \left|\{a\in\mathbb{Z}| 1\leq a \leq n, (a,n)=1 \}\right| \]
+ovvero il numero di interi compresi tra 1 e $n$ (inclusi) coprimi con $n$ stesso.
+\end{tcolorbox}
+\begin{osservaz}
+\emph{calcolare tale funzione potrebbe sembrare lungo e noioso, dovendo
+controllare la coprimalità tra numeri. Si è invece scoperto che tale funzione
+può essere computata con maggior semplicità grazie alla sua proprietà moltiplicativa,
+cioè vale $\Phi(ab) = \Phi(a)\Phi(b)$ per le coppie $a,b \in \mathbb{N} \setminus \{0\}$
+coprime:
+\[ \Phi(ab) = \Phi(a)\Phi(b) \qquad \forall a,b \in \mathbb{N} \setminus \{0\}: (a,b)=1 \]
+Ciò si dimostra con il teorema cinese del resto.}
+
+\emph{Seguono utili propiretà nel caso di numeri primi. Sia $p$ primo e sia $m\in\mathbb{N}\setminus\{0\}$. Si consideri
+$n=p^m$. Calcoliamo $\Phi(n) = \Phi(p^m)$. Vale:}
+\begin{align*}
+    \Phi(p^m) &= |\{a\in\mathbb{Z}|1\leq a \leq p^m, (a,p^m)=1\}| =\\
+                &= |\{a\in\mathbb{Z}|1\leq a \leq p^m, (a,p)=1\}| =\\
+                &= |\{1,...,p^m\} \setminus \{a\in\mathbb{Z}|1\leq a \leq p^m, (a,p)\not=1\}| =\\
+                &= |\{1,...,p^m\} \setminus \{p, 2p,..., p^{m-1}\cdot p\}| =\\
+                &= p^m - p^{m-1}
+\end{align*}
+\emph{In particolare, $\Phi(p) = p-1$ per ogni $p$ primo.}
+\end{osservaz}
+
+\begin{osservaz}
+\emph{dall'osservazione precedente, si ottiene una
+formula generale: $\Phi(1)=1$, altrimenti sia $n\geq 2$ tale che
+$n=p_1^{m_1}...p_k^{m_k}$ per qualche numero primo $p_1,...,p_k$
+con $p_i\not = p_j \quad \forall i\not = j$ e $m_1,...,m_k \in \mathbb{N}\setminus\{0\}$.
+Allora:}
+\[ \Phi(n) = (p_1^{m_1}-p_1^{m_1-1})...(p_k^{m_k}-p_k^{m_k-1}) \]
+\end{osservaz}
+
+\begin{tcolorbox}[title={Significato di $\Phi$}]
+Dato $n>0$, vale: \[ |(\mathbb{Z}/_{n\mathbb{Z}})^*| = \Phi(n) \]
+\textit{\textbf{Dimostrazione:}} dalle definizioni segue:
+\begin{align*}
+    |(\mathbb{Z}/_{n\mathbb{Z}})^*| &= |\{[a]_n\in\mathbb{Z}/_{n\mathbb{Z}}|0\leq a\leq n-1, (a,n)=1\}| =\\
+                                    &= |\{[a]_n\in\mathbb{Z}/_{n\mathbb{Z}}|1\leq a\leq n, (a,n)=1\}|=\\
+                                    &= |\{a\in\mathbb{Z}|1\leq a\leq n, (a,n)=1\}| = \Phi(n)
+\end{align*}
+\cvd
+\end{tcolorbox}
+
+
+\teorema{Teorema di Fermat-Eulero e piccolo teorema di Fermat}\label{fermateuler}
+\begin{tcolorbox}[title={Teorema di Fermat-Eulero}]
+Sia $n>0$. Vale:
+\[ \alpha^{\Phi(n)} = [1]_n \quad \forall\alpha\in(\mathbb{Z}/_{n\mathbb{Z}})^* \]
+Equivalentemente, se $a\in\mathbb{Z}$ tale che $(a,n)=1$, allora:
+\[ a^{\Phi(n)} \equiv 1 \Mod{n} \]
+\textit{\textbf{Dimostrazione:}} Provriamo anzitutto l'equivalenza delle due
+affermazioni. Sia $a\in\mathbb{Z}$ tale che $\alpha = [a]_n$. Sappiamo che
+$\alpha \in (\mathbb{Z}/_{n\mathbb{Z}})^* \Longleftrightarrow (a,n)=1$. Per
+la prima: \[ \alpha^{\Phi(n)} = [1]_n \Longleftrightarrow ([a]_n)^{\Phi(n)} = [1]_n \Longleftrightarrow [a^{\Phi(n)}]_n = [1]_n \qquad \Longleftrightarrow \qquad a^{\Phi(n)} \equiv 1 \Mod{n}  \]
+Proviamo la prima proposizione. Sia $\alpha\in (\mathbb{Z}/_{n\mathbb{Z}})^*$.
+Definiamo la funzione $L_\alpha:(\mathbb{Z}/_{n\mathbb{Z}})^* \to (\mathbb{Z}/_{n\mathbb{Z}})^*$
+ponendo \[L_\alpha(\beta) = \alpha\beta \quad \forall\beta\in(\mathbb{Z}/_{n\mathbb{Z}})^* \]
+$L_\alpha$ è ben definita grazie a (1) del lemma precedente (13.4).
+Dimostriamo che $L_\alpha$ è una bigezione. Grazie al lemma dei cassetti,
+avendo $L_\alpha$ dominio e codominio finiti e con lo stesso numero di elementi
+(di fatto coincidono), è sufficiente mostrare l'iniettività di $L_\alpha$.
+Siano $\beta_1,\beta_2 \in (\mathbb{Z}/_{n\mathbb{Z}})^*$ tali che
+$L_\alpha(\beta_1)=L_\alpha(\beta_2)$, ovvero:
+\[ L_\alpha(\beta_1) = L_\alpha(\beta_2) \Longleftrightarrow \alpha\beta_1 = \alpha\beta_2
+\Longrightarrow \alpha^{-1}\alpha\beta_1 = \alpha^{-1}\alpha\beta_2 \Longleftrightarrow [1]_n\beta_1 = [1]_n\beta_2 \Longleftrightarrow \beta_1 = \beta_2\]
+Quindi $L_\alpha$ è iniettiva, ma allora essa è anche una bigezione.
+Per il lemma 13.3, sia $k:=\Phi(n)=|(\mathbb{Z}/_{n\mathbb{Z}})^*|$ e siano
+$\beta_1,...,\beta_k$ tutti gli elementi di $(\mathbb{Z}/_{n\mathbb{Z}})^*$.
+Poiché $L_\alpha$ è una bigezione, $L_\alpha(\beta_1)=\alpha\beta_1,...,L_\alpha(\beta_k)$
+sono ancora tutti e soli gli elementi di $(\mathbb{Z}/_{n\mathbb{Z}})^*$,
+ovvero $\beta_1,...,\beta_k$ eventualmente riordinati.
+Poiché la moltiplicazione in $\mathbb{Z}/_{n\mathbb{Z}}$, e quindi anche nel
+suo sottoinsieme $(\mathbb{Z}/_{n\mathbb{Z}})^*$, è commutativa e
+associativa, vale:
+\[ \beta_1...\beta_k = L_\alpha(\beta_1)...L_\alpha(\beta_k) = \alpha\beta_1...\alpha\beta_k = \alpha^k\beta_1...\beta_k \]
+
+Poniamo $\gamma := \beta_1...\beta_k \in (\mathbb{Z}/_{n\mathbb{Z}})^*$ per il lemma precedente (1). Quindi
+\[ \gamma=\alpha^k\gamma \Longrightarrow \gamma\gamma^{-1}=\alpha^k\gamma\gamma^{-1}
+\Longrightarrow [1]_n = \alpha^k[1]_n \Longrightarrow \alpha^k = [1]_n \Longrightarrow \alpha^{\Phi(n)} = [1]_n \text{ in } (\mathbb{Z}/_{n\mathbb{Z}})^* \]
+\cvd
+\end{tcolorbox}
+Si noti che la prima parte della dimostrazione mostra che, se per
+$a,n\in\mathbb{Z},n>0$ vale la suddetta congruenza, allora $a,n$ devono
+sicuramente essere coprimi.
+
+Il teorema di Fermat-Eulero rappresenta in realtà una generalizzazione
+del \textit{piccolo teorema di Fermat}, formulato, ma dimostrato solamente
+in un secondo momento per opera di Eulero, da Fermat.
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Piccolo Teorema di Fermat}]
+Se $p$ è un numero primo e $a\in\mathbb{Z}$ tale che $p\not|a$ (equivalentemente $(a,p)=1$), allora:
+\[ a^{p-1} \equiv 1 \Mod{p} \]
+\textit{\textbf{Dimostrazione:}} Osserviamo che $(p,a)=1$: applicando
+il teorema di Fermat-Eulero, $a^{\Phi(p)} \equiv 1 \Mod{p}$, ma $a^{p-1} = a^{\Phi(p)}$
+dal momento che $p$ è primo.
+\cvd
+\end{tcolorbox}
+In realtà anche il teorema di Fermat-Eulero viene esteso da un ulteriore
+teorema, il \textit{teorema di Carmichael} (non verrà trattato qui), il
+quale introduce una funzione il cui metodo di computazione trova dimostrazione
+nel teorema cinese del resto, come per la moltiplicatività della $\Phi$ di Eulero.
+Citiamo brevemente questo teorema perché spiega una proprietà interessante
+dell'operazione potenza applicata alle classi di resto: l'\textit{orbita}
+(vedi \ref{orbit}).
+
+
+\teorema{Crittografia RSA}
+Siamo ormai giunti alla formulazione del principio che regge un celebre
+metodo di crittografia a chiave pubblica. Per semplificare la scrittura,
+definiamo alcune notazioni: sia $n>0$; per ogni $c\in\mathbb{N}\setminus\{0\}$, consideriamo
+la funzione $ P_c: (\mathbb{Z}/_{n\mathbb{Z}})^* \to (\mathbb{Z}/_{n\mathbb{Z}})^* $
+per la quale se $\alpha,\alpha^c\in(\mathbb{Z}/_{n\mathbb{Z}})^*$, $\alpha
+\mapsto \alpha^c$: \[ P_c(\alpha)=\alpha^c \quad \forall \alpha \in (\mathbb{Z}/_{n\mathbb{Z}})^* \]
+
+\begin{tcolorbox}[title={Crittografia RSA}]
+Siano $n,c \in \mathbb{N}$ tali che $n,c>0$ e $(c,\Phi(n))=1$
+(ovvero $[c]_{\Phi(n)}$ è invertibile). Sia $d>0$ un intero
+tale che $d \in [c]_{\Phi(n)}^{-1}$. Allora la funzione $P_c$
+è una bigezione, quindi, equivalentemente, è invertibile e:
+\[ P_c^{-1} = P_d \qquad \Longleftrightarrow \qquad (\alpha^c)^d = \alpha \qquad \forall \alpha \in (\mathbb{Z}/_{n\mathbb{Z}})^* \]
+\textit{\textbf{Dimostrazione:}}
+Si deve provare che $P_d \circ P_c = id_{(\mathbb{Z}/_{n\mathbb{Z}})^*}$
+e che $P_c \circ P_d = id_{(\mathbb{Z}/_{n\mathbb{Z}})^*}$.
+
+Per ipotesi su $d$, allora
+\[ [d]_{\Phi(n)}[c]_{\Phi(n)} = [1]_{\Phi(n)} \Longleftrightarrow [dc]_{\Phi(n)} = [1]_{\Phi(n)}
+\Longleftrightarrow cd \equiv 1 \mod{\Phi(n)} \Longleftrightarrow \exists k \in \mathbb{Z}: dc = 1 + k\Phi(n) \]
+quindi per il teorema di Fermat-Eulero:
+\[ P_d(P_c(\alpha)) = (\alpha^c)^d = \alpha^{cd} = \alpha^{k\Phi(n)+1} = \alpha(\alpha^{\Phi(n)})^k = \alpha \cdot [1]_n^k = \alpha \quad \forall \alpha \in (\mathbb{Z}/_{n\mathbb{Z}})^*\]
+Analogamente si dimostra che $P_c(P_d(\alpha)) = \alpha \quad \forall \alpha \in (\mathbb{Z}/_{n\mathbb{Z}})^*$.
+\cvd
+\end{tcolorbox}
+
+Il teorema appena illustrato consente di descrivere rigorosamente uno
+dei metodi di crittografia a chiave pubblica più conosciuti, pubblicato nel
+1977 dai matematici, crittografi e informatici Rivest, Shamir e Adleman
+(da qui il nome).
+
+Supponiamo che Ciro debba prelevare da un bancomat. Ogni cifra del numero
+della carta dovrà essere cifrato e mandato alla banca. Per fare ciò, la
+banca fornisce al bancomat due numeri $n$ e $c$, ovvero modulo e chiave
+di codifica, con proprietà $(c, \Phi(n)) = 1$. L'"alfabeto" della trasmissione
+sarà dunque costituito dagli elementi di $(\mathbb{Z}/_{n\mathbb{Z}})^*$
+e il bancomat dovrà inviare non la cifra in chiaro $x$, ma $x^c \Mod{n}$.
+Per decodificare il messaggio, basta trovare un $d>0$, la chiave di decodifica
+(che la banca deve mantenere segreta),
+tale che $cd \equiv 1 \Mod{\Phi(n)}$. Quindi avendo sia modulo che chiave
+pubblici risulta facile nella teoria capire i passaggi per ricondursi alla
+chiave di decodifica: basta trovare una classe inversa in modulo $\Phi(n)$.
+Il primo inghippo sta proprio qui: un ente esterno vede il valore $n$, ma è
+necessario calcolare $\Phi(n)$; dalle proprietà della funzione phi di
+Eulero si sa che questo conto può essere semplificato scomponendo $n$ in
+fattori coprimi. Si presentano due scenari:
+\begin{itemize}
+\item $n$ è primo, quindi il conto è immediato
+\item $n$ non è primo, quindi prima si fattorizza e poi si applica la proprietà moltiplicativa
+\end{itemize}
+Ma un eventuale malintenzionato si trova di fronte al secondo inghippo, più
+grave: entrambi gli scenari richiedono di compiere conti dispendiosi:
+controllare se $n$ è primo o fattorizzarlo. La banca invece conosce come
+$n$ (insieme a $c$) è stato costruito (secondo certe convenzioni di sicurezza,
+si pone $n=pq$ con $p,q$ numeri primi estremamente grandi e accuratamente scelti per
+complicare il lavoro di crivelli e algoritmi di fattorizzazione).
+Pertanto la decodifica risulta facile e i conti diventano una discesa: si trova
+immediatamente $\Phi(n)$, si applica l'algoritmo di Euclide a $c$ e $\Phi(n)$ e
+si determina, dopo altri passaggi, $d$. Il seguente corollario riassume, sotto
+forma di dimostrazione, come eseguire tali calcoli.
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Decodifica con Metodo RSA}]
+Sia $n>0$. Siano $a,c \in \mathbb{Z}$ tali che $(a,n)=1$ e $c>0$.
+Consideriamo la congruenza con potenza:
+\[ \begin{cases}
+    x \in \mathbb{Z}\\
+    x^c \equiv a \Mod{n}
+\end{cases} \]
+Indichiamo con $S$ l'insieme delle sue soluzioni: $S:=\{x\in \mathbb{Z}|
+x^c \equiv a \Mod{n} \}$. Allora se $(c,\Phi(n))=1$ e $d>0,d\in[c]^{-1}_{\Phi(n)}$,
+allora: \[ S= \{a^d + kn \in \mathbb{Z}|k\in\mathbb{Z}\} = [a^d]_n \subseteq \mathbb{Z} \]
+\textit{\textbf{Dimostrazione:}}
+\end{tcolorbox}
+
+
+\section{Metodi di calcolo; orbita di una classe}\label{orbit}
+Le proprietà dell'aritmetica modulare consentono di effettuare calcoli (in modulo)
+a mano nonostante ci si dovesse imbattere in numeri estremamente grandi.
+Anche se il calcolo manuale non riscuote molto successo al giorno d'oggi,
+esistono ancora alcuni sistemi, come le calcolatrici, che impiegano
+tecniche di aritmetica modulare per semplificare i calcoli e trattare
+numeri altrimenti enormi rispetto alla capacità di rappresentazione digitale
+del dispositivo.
+Tecniche di calcolo simili si fondano su alcuni principi esaminati in
+questa parte:
+\begin{itemize}
+\item equivalenza tra classi di resto;
+\item somma e prodotto tra classi di resto;
+\item teorema di Fermat-Eulero, insieme a generalizzazioni e corollari;
+\item orbita.
+\end{itemize}
+Supponiamo di voler calcolare il resto della divisione intera tra
+$4^{2465}$ e $3$. Calcolare esplicitamente il dividendo non sarebbe
+molto efficiente, ma, conoscendo ora l'aritmetica modulare, sappiamo
+che il problema è interpretabile come segue:
+\[ \text{si trovi il minimo } r\in\mathbb{Z},r\geq0: [r]_3 = [4^{2465}]_3 \]
+Dunque applichiamo le proprietà algebriche: $[4^{2465}]_3 = [4]^{2465}_3 = [1]_3^{2465} = [1^{2465}]_3 = [1]_3 \Rightarrow r = 1$.
+Supponiamo ora di voler identificare la cifra delle unità di $7^{222}$.
+Con un po' di ragionamento si imposta il problema come segue\footnote{In un naturale espresso in
+base decimale, la cifra delle unità corrisponde al resto della divisione tra il numero stesso e 10.}:
+\[ d\in\{0,...,9\}: 7^{222}\equiv d\Mod{10} \]
+Notiamo che 7 e 10 sono coprimi, quindi per il teorema di Fermat-Eulero
+$7^{\Phi(10)}\equiv 1 \Mod{10}$, dove $\Phi(10)=\Phi(2\cdot5)=4$. Ma
+allora $7^{222}\equiv 7^{4\cdot55+2} \equiv (7^4)^{55}\cdot7^2\equiv 1^{55}\cdot 49 \equiv 49\equiv 9 \Mod{10} \Rightarrow d=9$.
+
+Illustriamo il concetto di orbita di una classe di resto con la seguente tabella,
+prendendo l'esempio di $[8]_{77}$:
+\begin{center}
+\begin{tabular}{c|l}
+    \head{$k$} & \head{Rappresentante di $[8^k]_{77}$}\\
+    \hline
+    1        & $8$\\
+    2        & $64$\\
+    3        & $50$\\
+    4        & $15$\\
+    5        & $43$\\
+    6        & $36$\\
+    7        & $57$\\
+    8        & $71$\\
+    9        & $29$\\
+    10       & $1$\\
+    11       & $8$\\
+    12       & $64$\\
+    \dots    & \dots
+\end{tabular}
+\end{center}
+Notiamo che all'esponente 10 abbiamo ottenuto il rappresentante
+1. Per i principi dell'aritmetica modulare ciò accade sempre. Ma
+quello che è ancor più sorprendente è che questa successione è periodica
+(provate a proseguire con i calcoli con $k>10$): questa è l'orbita
+della classe $[8]_{77}$ elevata a potenze positive. La formulazione
+rigorosa di questa proprietà si collega al teorema di Carmichael.
+
+La tecnica dell'orbita permette, in alcuni casi, di velocizzare i calcoli in
+modulo in due modi: trovare rappresentanti canonici ridotti e agevoli
+da maneggiare o raggiungere la classe 1 senza ripiegare sul teorema
+di Fermat-Eulero. Questa tecnica può tornare utile in alcuni
+contesti (si vedano gli esercizi) ma non è sempre conveniente. Per esempio,
+l'orbita potrebbe essere più lunga di quello che si potrebbe pensare.
+
+
+
+
+\part{Grafi}
+\chptr{Prime Nozioni di Teoria dei Grafi}
+
+\section{Definizioni relative ai grafi}
+Non introdurremo i grafi nella classica maniera grafica e intuitiva (punti collegati
+tra loro da semirette), ma sfrutteremo il linguaggio insiemistico al fine
+di comprendere le proprietà e le potenzialità di questi oggetti matematici estremamente
+utili in informatica.
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Insieme dei 2-sottoinsiemi]
+Dato un insieme $V$, indichiamo con \[ \binom{V}{2}:=\{ A \in 2^V| \left|A\right|=2 \} \]
+(che si dice $V$ su 2) l'insieme i cui elementi sono tutti i sottoinsiemi con
+due elementi che si possono estrarre da $V$.
+\end{tcolorbox}
+\begin{osservaz}
+\emph{se $V = \varnothing$ oppure $V = \{x\}$ (singoletto), allora $\binom{V}{2} = \varnothing$}
+\end{osservaz}
+\noindent Facciamo alcuni esempi:
+\begin{itemize}
+\item se $V=\{a,b\}$, allora $\binom{V}{2}=\{\{a,b\}\}=\{V\}$ e $|\binom{V}{2}|=1$;
+\item per $V=\{a,b,c\}$ vale $\binom{V}{2} = \{\{a,b\},\{a,c\},\{b,c\}\}$ e dunque $|\binom{V}{2}|=3$.
+\end{itemize}
+Si può dimostrare, ad esempio per induzione,
+che se $V$ è finito allora vale
+\[ \left|\binom{V}{2}\right| = \binom{|V|}{2} \]
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Grafo]
+Un grafo $G$ è una coppia ordinata $(V,E)$, dove $V$ è un insieme non vuoto
+(detto \textit{insieme dei vertici di $G$}) e $E$ è un sottoinsieme eventualmente
+vuoto di $\binom{V}{2}$ (detto \textit{insieme dei lati di $G$}).
+\end{tcolorbox}
+
+\noindent Supponiamo che $G=(V,E)$ sia un grafo e selezioniamo $e\in E$. Poiché $E \subseteq
+\binom{V}{2}$, allora $e \in \binom{V}{2}$ e quindi $e=\{v_1,v_2\}$ per qualche
+$v_1,v_2\in V$. In questa situazione $v_1,v_2$ si dicono \textit{estremi di $e$}
+e che i vertici $v_1,v_2$ di $G$ sono \textit{collegati dal lato $e$ di $G$}.
+Dato un grafo $G$, indicheremo con $V(G)$ l'insieme dei suoi vertici e con $E(G)$
+quello dei suoi lati: \[ G=(V(G), E(G)) \quad \text{per } G \text{ fissato} \]
+Per indicare i vertici, possono essere impiegati arbitrariamente lettere
+maiuscole o minuscole, numeri e così via. Mostriamo alcuni esempi di grafi
+introducendo anche alcune rappresentazioni grafiche:
+\begin{figure}[H]
+\centering
+%\includegraphics[scale=0.3]{Grafo 1.png}
+\caption{$G_1$}
+\end{figure}
+\noindent Citiamo alcuni grafi notevoli:
+\begin{itemize}
+\item \textbf{Cammino di lunghezza $n$}
+\item \textbf{Cammino infinito}
+\item \textbf{Ciclo}
+\item \textbf{Grafo completo su $n$ vertici:} in questi grafi
+compaiono tutti i lati costruibili tra gli $n$ vertici, ovvero
+\[ E(G) = \binom{V(G)}{2} \]
+\end{itemize}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Sottografo]
+Siano $G=(V,E)$ e $G'=(V',E')$ due grafi. Diciamo che $G'$ è un sottografo di $G$
+se $V'\subseteq V$ e $E'\subseteq E$.
+\end{tcolorbox}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Sottografo Indotto]
+Sia $V'\subseteq V$. Il seguente grafo $G'$ si dice sottografo di $G$ indotto da
+$V'$, scriveremo $G'=G[V']$:
+\begin{itemize}
+\item $V(G')=V'$
+\item $E(G')=\{e\in E| e=\{v,w\}, v,w \in V'\}$
+\end{itemize}
+\end{tcolorbox}
+\noindent In altre parole, dati i vertici $V'$, il sottografo indotto $G'$ deve contenere
+tutti i lati di $G$ che connettono i vertici $V'$.
+Ad esempio, consideriamo $G=(V,E)$ e $V'\subseteq V$: $V=\{1,2,3,4,5\}, V'=\{1,2,3,5\}$.
+Poniamo inoltre $G'=(V',E(G'))$, $E(G')=\{\{1,2\}, \{2,3\}, \{2,5\}\}$. $G'$ è un sottografo
+di $G$ indotto da $V'$? La situazione è riportata graficamente in Figura \ref{sottografo}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{figures-fmi/sottografi.pdf}
+\caption{Grafo $G$, con $G'$ evidenziato in rosso.}
+\label{sottografo}
+\end{figure}
+\noindent La risposta è negativa, perché manca il lato $\{5,3\}$:
+$G' \not = G[V']$. Tuttavia sono soddisfatte le condizioni di sottografo.
+
+
+\section{Morfismi e isomorfismi di grafi}
+
+\chptr{Sulla Congiungibilità}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Passeggiate, cammini, cicli}]
+Sia $G=(V,E)$ un grafo. Una successione finita ordinata $(v_0,v_1,...,v_n)$
+di vertici di $G$ (cioè $v_0,v_1,...,v_n \in V$) si dice:
+\begin{itemize}
+\item \textbf{Passeggiata in $G$} se $n=0$ oppure $n\geq 1$ e $\{v_i,v_{i+1}\}\in E \quad \forall i \in \{0,...,n-1\}$.
+\item \textbf{Cammino in $G$} se è una passeggiata in $G$ e $v_i \not = v_j \quad \forall i,j \in \{0,...,n\}, i\not = j$.
+\item \textbf{Ciclo in $G$} se è una passeggiata in $G$ e $n \geq 3, v_n=v_0, (v_0,...,v_{n-1})$ è un cammino in $G$.
+\end{itemize}
+\end{tcolorbox}
+Consideriamo come esempio il grafo $G$:
+\begin{center}
+\begin{tikzpicture}[node distance = {15mm}, main/.style={draw, circle}]
+\node[main] (1)  {$1$};
+\node[main] [right of = 1] (2) {$2$};
+\node[main] [below of = 2] (3) {$3$};
+\node[main] [right of = 3] (4) {$4$};
+\node[main] [right of = 4] (5) {$5$};
+\node[main] [right of = 2] (6) {$6$};
+\node[main] [above of = 5] (7) {$7$};
+\node[main] [above right of = 7] (8) {$8$};
+\draw (1) -- (2);
+\draw (2) -- (3);
+\draw (3) -- (4);
+\draw (4) -- (5);
+\draw (2) -- (6);
+\draw (3) -- (6);
+\draw (4) -- (6);
+\draw (7) -- (8);
+\end{tikzpicture}
+\end{center}
+Ecco alcune successioni finite ordinate di vertici di $G$ e come esse vengono classificate:
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+\head{Successione}   & \head{Passeggiata} & \head{Cammino} & \head{Ciclo}\\
+\hline
+$(2,3,6,2,1)$     & $\star$            &                &\\
+$(2,3,4,6,3,2)$   & $\star$            &                &\\
+$(2,3,4,6,2)$     & $\star$            &                & $\star$\\
+$(1,2,4,5)$       &                    &                &\\
+$(1,2,3,6,4,5)$   & $\star$            & $\star$        &\\
+$(7)$             & $\star$            & $\star$        &(*)\\
+\hline
+\end{tabular}
+\end{center}
+(*) si ricorda che il ciclo deve attraversare almeno 3 lati!
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title={Vertici congiungibili}]
+Sia $G=(V,E)$ un grafo e siano $v,w \in V$. Diciamo che $v$ è congiungibile a
+$w$ in $G$ per cammini (o passeggiate) se esiste un cammino (passeggiata)
+$Q=(v_0,...,v_n)$ tale che $v_0=v$ e $v_n = w$.
+\end{tcolorbox}
+
+
+\teorema{Equivalenza tra congiungibilità per cammini e passeggiate}
+\begin{tcolorbox}[title={Equivalenza tra congiungibilità per cammini e passeggiate}]
+Due vertici $v,w$ sono congiungibili mediante un cammino se e solo se lo
+sono mediante una passeggiata.
+$\\\\$
+\textit{\textbf{Dimostrazione:}} Se $v$ è congiungibile a $w$ in $G$ per
+cammini, allora lo è anche per passeggiate, perché un cammino è anche una
+passeggiata.
+
+Supponiamo viceversa che $v$ sia congiungibile con $w$ in $G$ tramite
+una certa passeggiata $P$. Osserviamo che, se $v=w$, allora è
+sufficiente considerare il cammino banale $(v)$. Supponiamo $v \not = w$.
+Consideriamo il seguente insieme:
+\[ \mathcal{P}:=\{Q|Q \text{ è una passeggiata in } G \text{ da } v \text{ a } w\} \]
+Per ipotesi $P \in \mathcal{P} \Longrightarrow \mathcal{P} \not = \varnothing$.
+Definiamo il seguente insieme \textit{delle energie} degli elementi di
+$\mathcal{P}$:
+\[ \mathcal{A}:=\{l(Q) \in \mathbb{N}| Q \in \mathcal{P}\}\subseteq\mathbb{N} \]
+dove $l(Q)="\text{numero di lati percorsi durante la passeggiata } Q"$.
+Ma $l(P) \in \mathcal{A} \Longrightarrow \mathcal{A} \not = \varnothing$.
+Grazie al teorema del buon ordinamento dei naturali,
+\[\exists \min\mathcal{A}=:m \qquad \Longrightarrow \qquad \exists P_0 \in \mathcal{P}: l(P_0) = m \leq l(Q) \quad \forall Q \in \mathcal{P}\]
+Dimostriamo che $P_0 = (v_0,...,v_n), v_0=v, v_n=w$ è un cammino in $G$.
+Supponiamo per assurdo che esso non lo sia. Allora (ricordando però che
+$v\not = w$) $\exists i,j \in \{0,...,n\}: i\not = j, v_i=v_j$ e possiamo
+supporre $i<j$ a meno di scambio. Si consideri allora $P_1=(v_0,..., v_i, v_{j+1},...,v_n)$,
+che è una passeggiata: dato che $P_0$ è una passeggiata, $\{v_h,v_{h+1}\} \in E(G)$
+per ogni $0\leq h<n$, e dato che $v_i=v_j$, allora $\{v_i,v_{j+1}\}=\{v_j,v_{j+1}\}
+\in E(G)$. $P_1$ congiunge $v$ a $w$ (sappiamo che $v_0=v, v_n=w$), quindi
+$P_1\in\mathcal{P}$.
+Ma allora \[ l(P_1)=l(P_0)-(j-i)=m-(j-i)<m=\min\mathcal{A} \]
+che contraddice la condizione di minimalità imposta su $P_0$. Segue che
+$P_0$ è un cammino in $G$, quindi $v,w$ sono congiungibili anche
+per cammino in $G$.
+\cvd
+\end{tcolorbox}
+
+\teorema{Congiungibilità come relazione di equivalenza}
+\begin{tcolorbox}[title=La congiungibilità tra vertici è una relazione di equivalenza]
+Sia $G=(V,E)$ un grafo. Definiamo la relazione biunivoca $\sim$ sull'insieme
+$V$ dei vertici ponendo:
+\[ v \sim w \text{ se } v \text{ è congiungibile con } w \text{ in } G \]
+La relazione $\sim$ è una relazione di equivalenza su $V$.
+$\\\\$
+\textit{\textbf{Dimostrazione:}}
+Sia $G=(V,E)$ un grafo e prendiamo
+$v,v',v'' \in V$, $\sim :=$ relazione di congiungibilità.
+\begin{enumerate}
+    \item \textbf{Riflessività:} $\forall v\in V$ è sufficiente considerare
+    la passeggiata banale $B=(v)$, dunque $v\sim v$.
+    \item \textbf{Simmetricità:} $v \sim v' \Longrightarrow \exists
+    P=(v_0=v,v_1,...,v_{n-1},v_n=v')$ passeggiata in $G$. Basta dunque
+    considerare la passeggiata "inversa" $P'=(v_n=v',v_{n-1},...,v_0=v) \Longrightarrow
+    v'\sim v$.
+    \item \textbf{Transitività:} $v\sim v', v'\sim v'' \Longrightarrow
+    \exists P_1=(v_0=v,...,v_n=v'), P_2=(u_0,=v',...,u_m=v'')$. Si considera
+    dunque $Q=(v_0=v,...,v_n=v', u_1,...,u_m=v'')$, che è una passeggiata
+    perché tutti gli elementi consecutivi di $Q$ rappresentano vertici che
+    sono adiacenti nelle passeggiate $P_1,P_2 \Longrightarrow v\sim v''$.
+\end{enumerate}
+\cvd
+\end{tcolorbox}
+Inoltre, se
+$\{v_i\}_{i \in I}$ è l'insieme di tutte le $\sim$-classi di equivalenza,
+allora i sottografi $\{G[V_i]\}_{i \in I}$ indotti da $G$ su $V_i$ si
+dicono \textbf{componenti connesse di $G$}. Se $G$ possiede una sola
+componente connessa (questo vuol dire che ogni coppia di vertici di $G$
+è congiungibile in $G$), allora $G$ si dice \textbf{grafo connesso}. Se
+$G$ non è connesso, si dice \textbf{sconnesso}.
+Si consideri il grafo dell'esempio precedente. Possiamo individuare
+due classi (non abbiamo un grafo connesso), dalle quali otteniamo due insiemi di
+vertici coi quali definire due sottografi indotti connessi:
+\begin{enumerate}
+\item $[1]_\sim = \{1,2,3,4,5,6\} = V_1 \Rightarrow G[V_1]$
+\item $[7]_\sim = \{7,8\} = V_2 \Rightarrow G[V_2]$
+\end{enumerate}
+
+
+\chptr{Grafi Finiti}
+\teorema{La relazione fondamentale dei grafi finiti}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Grafo finito]
+Un grafo $G$ si dice finito se $V(G)$ è finito (numero finito di vertici).
+\end{tcolorbox}
+
+\begin{osservaz}
+\emph{un grafo finito ha un numero finito di lati:
+$G \text{ finito } \Longrightarrow V(G) \text{ finito }
+\Longrightarrow \binom{V(G)}{2} \text{ finito } \Longrightarrow E(G) \subseteq
+\binom{V(G)}{2} \text{ finito } \Longrightarrow E(G) \text{ finito}$ (lemma dei cassetti).
+Quindi $|E(G)| \text{ finito }$.}
+\end{osservaz}
+
+\begin{osservaz}
+\emph{esistono grafi infiniti che hanno numero finito di
+lati: $(\mathbb{N}, \varnothing)$. Quindi avere lati finiti non implica la
+condizione di essere grafo finito.}
+\end{osservaz}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Grado di un vertice]
+Sia $G=(V,E)$ un grafo finito e sia $v \in V$. Definitamo il grado di $v$
+in $G$ come segue:
+\[  \deg_G(v) := |\{e \in E| v \in e\}| \]
+ovvero il numero di lati ai quali $v$ appartiene.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Score di un grafo]
+Si chiama score di un grafo il vettore contenente il grado di ogni vertice,
+eventualmente riordinati:
+\[ \text{Score}(G) := (\deg_G(v_1),...,\deg_G(v_n)) = (d_1,...,d_n) \]
+Lo score che ordina i gradi in modo crescente o al più costante è lo \textbf{score canonico}:
+$d_1\leq ...\leq d_n$.
+\end{tcolorbox}
+Sottolineamo la relazione tra score di grafi isomorfi. Se $G$ e $G'$ sono isomorfi allora hanno lo stesso score:
+\[ G \cong G' \Longrightarrow \text{Score}(G) = \text{Score}(G') \]
+Non vale l'implicazione inversa.
+
+\begin{tcolorbox}[title={Relazione fondamentale dei grafi finiti}]
+Sia $G=(V,E)$ un grafo finito. Allora
+\[ \sum_{v\in V} \deg_G(v) = 2|E| \]
+\textit{\textbf{Dimostrazione:}} Scriviamo esplicitamente $V$ e $E$:
+\[ V=\{v_1,...,v_n\} \qquad E=\{e_1,...,e_k\} \]
+Dunque $n=|V|$ e $k=|E|$. Definiamo $m_{ij} \in \{0,1\}$ per ogni
+$i \in \{1,...,n\}, j \in \{1,...,k\}$:
+\[ m_{ij} :=
+    \begin{cases}
+        0 & v_i \not \in e_j\\
+        1 & v_i \in e_j
+    \end{cases}
+    \quad \text{ ottenendo la \textit{matrice di adiacenza} } \quad
+    M =
+    \begin{bmatrix}
+        m_{11} & m_{12} & \dots  & m_{1k}\\
+        m_{21} & m_{22} &        & \vdots\\
+        \vdots &        & \ddots & \vdots\\
+        m_{n1} & \dots  & \dots  & m_{nk}\\
+    \end{bmatrix}
+\]
+Si osserva che la somma totale $\sum_{i=1}^{n}\sum_{j=1}^{k}m_{ij}$ degli elementi
+della matrice non dipende dalla precedenza tra righe e colonne. Sommando
+una riga si ottiene il grado del rispettivo vertice, mentre dalle
+colonne si ottiene sempre 2, dal momento che ogni lato congiunge due
+soli vertici:
+\[ \sum_{i=1}^{n}\left(\sum_{j=1}^{k}m_{ij}\right) = \sum_{j=1}^{k}\left(\sum_{i=1}^{n}m_{ij}\right)
+\quad\Longleftrightarrow\quad \sum_{i=1}^{n}\deg_G(v_i) = \sum_{j=1}^{k}2
+\quad\Longleftrightarrow\quad \sum_{v\in V}\deg_G(v)=2k=2|E| \]
+\cvd
+\end{tcolorbox}
+
+
+\teorema{Lemma delle strette di mano}
+Immaginiamo di essere ad una festa. Di norma ci si stringe spesso la
+mano tra gli invitati, ma il padrone di casa si diverte a verificare
+ogni volta una proprietà curiosa. Egli chiede sempre ad ogni ospite di
+contare il numero di persone distinte con le quali ha stretto la mano.
+Il padrone scopre sempre che il numero di invitati che hanno stretto la
+mano ad un numero dispari di coetanei è \textit{sempre} pari. Da qui il
+nome intuitivo del lemma delle strette di mano.
+\begin{tcolorbox}[title={Lemma delle strette di mano}]
+In un grafo finito il numero di vertici di grado dispari è pari.
+$\\\\$
+\textit{\textbf{Dimostrazione:}} Sia $G=(V,E)$. Definiamo:
+\[ P:=\{v \in V| \deg_G(v) \text{ pari}\} \qquad D:=\{v\in V| \deg_G(v) \text{ dispari}\} \]
+In particolare questi formano una partizione di $V$:
+$V = P \cup D$ e $P \cap D = \varnothing$. Applicando
+la relazione fondamentale otteniamo:
+\[ \sum_{v\in P}\deg_G(v) + \sum_{v \in D}\deg_G(v) = 2|E| \quad\Longleftrightarrow\quad
+\sum_{v\in D}\deg_G(v) = 2|E|-\sum_{v\in P}\deg_G(v) \]
+Osserviamo che nel membro di destra abbiamo una quantità pari alla
+quale si sottrae un'altra quantità pari. Questo implica che anche
+il membro di sinistra è pari, ma essendo una somma di elementi dispari,
+i suoi addendi devono comparire in numero pari.
+\cvd
+\end{tcolorbox}
+Le applicazioni di questo lemma sono piuttosto vantaggiose in ambito
+informatico. Supponiamo che, tra le specifiche di una rete che si
+intende costruire, vengano forniti i numeri di collegamenti (cavi e
+altro) per ogni dispositivo appartenente alla rete, sotto forma di score
+\[ s = (0,0,\textcolor{red}{1},\textcolor{red}{1},\textcolor{red}{1},2,2,\textcolor{red}{3},\textcolor{red}{3}) \]
+Notiamo a colpo d'occhio che dovrebbero esistere 5 nodi di grado
+dispari, ma questo non sarebbe possibile per il lemma delle strette
+di mano.
+
+
+\section{Grafi 2-connessi e hamiltoniani}
+Sia $G=(V,E)$ un grafo con almeno due vertici. Scegliamo $v\in V$. Definiamo
+il grafo $G - v$, ottenuto da $G$ cancellando il vertice $v$. Ponendo:
+\[ V(G-v) := V(G) \setminus \{v\} \qquad E(G-v):= E(G)\setminus \{e\in E(G)| v \in e\} \]
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Grafo 2-connesso]
+Sia $G=(V,E)$ con almeno 3 vertici. Diciamo che $G$ è 2-connesso se $G-v$ è
+connesso $\forall v \in V$.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Grafo Hamiltoniano]
+Sia $G=(V,E)$ con almeno 3 vertici. Diciamo che $G$ è hamiltoniano se ammette
+almeno un \textbf{ciclo hamiltoniano}, ovvero un ciclo in $G$ che attraversa
+tutti i suoi vertici.
+\end{tcolorbox}
+\noindent Vale la seguente catena di implicazioni (ma non quella inversa):
+\[ G \text{ hamiltoniano } \Longrightarrow G \text{ 2-connesso } \Longrightarrow G \text{ connesso} \]
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Foglia]
+Sia $G=(V,E)$ un grafo. Un vertice $v\in V$ si dice \textbf{foglia} di $G$
+se $\deg_G(v)=1$.
+\end{tcolorbox}
+\noindent Supponiamo che $G=(V,E)$ sia 2-connesso. Allora $G$ non
+può avere foglie. Infatti, si supponga per assurdo che $\exists v\in V$
+foglia di $G$, cioè $\text{deg}_G(v)=1$. Allora $\exists!w\in V,w\not=v:\{v,w\}\in E$.
+Considerando il grafo $G-w$, si osserva che $v$ è un vertice isolato di
+$G-w$, dunque $G-w$ è sconnesso.
+\begin{osservaz}
+\emph{Lo stesso ragionamento vale per i grafi Hamiltoniani. Intuitivamente,
+se $G$ fosse un grafo hamiltoniano, allora esisterebbe un ciclo hamiltoniano,
+che cioè attraversa ogni vertice senza mai passare sugli stessi lati.
+Ma allora non possono esistere foglie in $G$, altrimenti il ciclo
+non potrebbe chiudersi (si potrebbe solo \emph{entrare}, ma non \emph{uscire}, dalla
+foglia).}
+\end{osservaz}
+
+
+\chptr{Alberi}
+\teorema{Alberi e formula di Eulero}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Alberi e Foreste]
+Un albero è un grafo cnnesso e senza cicli. Una foresta è un grafo senza
+cicli.
+\end{tcolorbox}
+\begin{osservaz}
+\emph{un grafo è una foresta se e solo se ogni sua componente
+connessa è un albero.}
+\end{osservaz}
+
+\begin{tcolorbox}[title={Teorema sugli alberi}]
+    Sia $T=(V,E)$ un grafo non connesso finito. Le seguenti affermazioni sono
+    equivalenti:
+    \begin{enumerate}
+        \item $T$ è un albero.
+        \item $\forall v,v'\in V, \exists!$ cammino in $T$ che congiunge $v,v'$.
+        \item \textbf{Minimalità della connessione:} $T$ è connesso e $\forall
+        e\in E, T-e:=(V,E\setminus \{e\})$ è sconnesso.
+        \item \textbf{Massimalità rispetto all'assenza di cicli:} $T$ non ha
+        cicli e $\forall e \in \binom{V}{2}\setminus E, T+e:=(V,E\cup\{e\})$
+        possiede cicli.
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title={Lemma delle foglie}]
+    Sia $T$ un albero finito avente almeno due vertici. Allora $T$ possiede almeno
+    due foglie.
+    $\\\\$
+    \textit{\textbf{Dimostrazione:}} Sia $\mathcal{P}$ l'insieme di  tutti i cammini
+    possibili in $T$. Poiché $T$ è finito, $\mathcal{P}$ è finito. Dunque esiste un
+    cammino $P=(v_0,...,v_k) \in \mathcal{P}$ che abbia lunghezza massima $k$:
+    \[ k=l(P)\geq l(P') \quad \forall P'\in\mathcal{P} \]
+    Dimostriamo che $v_0,v_k$ sono due foglie di $T$. Supponiamo che $v_0$ non sia
+    una foglia. Quindi $\deg_T(v_0)\geq 2$. Sia allora $v'$ vertice del secondo
+    lato $\{v_0,v'\}$. $v'\not\in\{v_1,...,v_k\}$, perché altrimenti si creerebbero
+    cicli. Ma allora si otterrebbe una passeggiata $P'=(v',v_0,...,v_k)$ di lunghezza
+    maggiore di $P$. Quindi necessariamente $\deg_T(v_0)=1$.
+    \cvd
+\end{tcolorbox}
+
+\begin{osservaz}
+    Questo lemma è falso se non si assume che l'albero sia finito. Esistono
+    alberi infiniti che possiedono una o nessuna foglia (cammini infiniti).
+\end{osservaz}
+
+\noindent\textbf{Esercizio 20.8:} si dimostri che se $G$ è un grafo connesso e $v$
+è una sua foglia, allora $G-v$ è connesso.
+
+\noindent\textbf{Esercizio 20.9:} Sia $T$ un albero e sia $v$ una sua foglia. Allora
+$T-v$ è ancora un albero.
+
+\begin{tcolorbox}[title={Teorema di caratterizzazione degli alberi finiti mediante la formula di Eulero}]
+    Sia $T=(V,E)$ un grafo finito. Le seguenti affermazioni sono equivalenti:
+    \begin{enumerate}
+        \item $T$ è un albero;
+        \item $\forall v,v'\in V,\exists! \text{ cammino in} T \text{ che congiunge} v,v'$;
+        \item Minimalità della connessione;
+        \item Massimalità rispetto all'assenza di cicli;
+        \item \textbf{$T$ è connesso e vale la seguente formula di Eulero:}
+    \end{enumerate}
+    \[ |V|-1=|E| \]
+    \textit{\textbf{Dimostrazione:}} Mostriamo che (1) implica (5). procediamo
+    per induzione su $|V(T)|$.
+
+    $|V(T)|=1$ (base induzione) $T$ consiste in un vertice isolato, dunque $|V(T)|=1$ e $|E(T)|=0
+    \Longrightarrow |V(T)|-1 = 1-1 = 0 = |E(T)|$.
+
+    $|V(T)|\geq 2, |V(T)|-1\Longrightarrow|V(T)|$ (passo induttivo) Sia $T$ un albero con
+    almeno 2 vertici. Assumiamo che la formula di Eulero valga su tutti gli alberi che
+    possiedono un vertice in meno di $T$ (ipotesi induttiva). Grazie al lemma 20.6, $T$
+    possiede almeno due foglie $v,w$. Grazie all'esercizio 20.9, $T-v$ è un albero.
+    Segue che $|V(T-v)|=|V(T)|-1$, dunque per ipotesi induttiva vale la formula di
+    Eulero per $T-v$: \[ |V(T-v)|-1=|E(T-v)| \Longrightarrow 1+|V(T-v)| - 1 = 1+|E(T-v)| \Longrightarrow |V(T)|-1=|E(T)| \]
+    Il passo induttivo è verificato, dunque grazie al principio di induzione di prima forma
+    l'implicazione (1)$\Rightarrow$(5) è sempre vera.
+
+    Mostriamo ora che (5) implica (1). Procediamo per induzione su $|V(T)|$.
+
+    $|V(T)|=1$ (base induzione) $T$ possiede un solo vertice: è un albero e vale (1).
+
+    $|V(T)|\geq 2, |V(T)|-1\Longrightarrow|V(T)|$. Sia $T$ un grafo finito
+    connesso con almeno due vertici e che soddisfa la formula di Eulero. Assumiamo che l'implicazione
+    (5)$\Rightarrow$(1) sia vera per tutti i grafi finiti connessi con esattamente
+    $|V(T)|-1$ vertici e per i quali vale la formula di Eulero (ipotesi induttiva).
+    Mostriamo che $T$ ammette almeno una foglia.
+    Supponiamo che $T$ non abbia foglie; segue che:
+    \begin{align*}
+        \forall w\in V(T) &\\
+        &\deg_T(w)\not = 0 \text{ per ipotesi sulla connessione e sul numero minimo di vertici}\\
+        &\deg_T(w)\not = 1 \text{ per supposizione sull'assenza di foglie}\\
+        &\Longrightarrow \deg_T(w)\geq 2
+    \end{align*}
+    Vale, per ipotesi (vale Eulero per $T$)$^*$ e per la relazione fondamentale dei grafi finiti$^{**}$:
+    \[ 2|V(T)|-2 = 2(|V(T)|-1)\stackrel{\text{*}}{=}2|E(T)|\stackrel{\text{**}}{=}\sum_{w\in V(T)}\deg_T(w)\geq \sum_{w\in V(T)}2=2|V(T)| \]
+    Il che è assurdo, a causa del fatto che si è assunta l'assenza di foglie.
+    Quindi $\exists v$ foglia di $T$. Allora per l'esercizio 20.8 $T-v$ è connesso.
+    Siccome $T$ soddisfa la formula di Eulero, $(|V(T)|-1) -1 = |E(T)|-1
+    \Rightarrow |V(T-v)|-1=|E(T-v)|$, quindi $T-v$ soddisfa la formula di Eulero
+    e ad esso si può applicare l'ipotesi induttiva: $T-v$ è un albero. $T$ non
+    può avere un ciclo, perché tale ciclo dovrebbe attraversare vertici di grado
+    maggiore o uguale di 2, dunque non può attraversare la foglia. Ma per ipotesi
+    $T-v$ è un albero, dunque tale ciclo non può esistere. Allora $T$ è un albero.
+    Il passo induttivo è verificato, quindi l'implicazione inversa è sempre vera
+    grazie al principio di induzione di prima forma.
+    \cvd
+\end{tcolorbox}
+
+
+\teorema{Alberi di copertura}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!30!black, title=Albero di copertura]
+Sia $G$ un grafo. Un sottografo $T$ di $G$ è un albero di copertura (spannig tree) se:
+\begin{itemize}
+    \item $T$ è un albero.
+    \item $V(T)=V(G)$
+\end{itemize}
+\end{tcolorbox}
+
+\noindent Nel grafo $G$ in Figura \ref{spanning} viene evidenziato un suo possibile spanning tree.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{figures-fmi/spanningtree.pdf}
+\caption{$G$}
+\label{spanning}
+\end{figure}
+
+\begin{osservaz}
+\emph{se $G$ ammette spanning tree, allora $G$ è connesso. Infatti
+se $T$ è uno spanning tree per $G$, allora $V(T)\subset V(G), E(T)\subset E(G)$.
+Quindi un cammino in $T$ è anche un cammino in $G$. Poiché $T$ è connesso (per
+definizione di albero), allora lo è anche $G$.}
+\end{osservaz}
+
+\begin{tcolorbox}[title={Esistenza dell'albero di copertura per grafi connessi finiti}]
+Se $G$ è un grafo finito connesso, allora esso ammette un albero di copertura.
+$\\\\$
+\textit{\textbf{Dimostrazione:}} Sia $G$ un grafo finito e connesso. Definiamo
+l'insieme \[ \mathcal{C}:=\{C|C \text{ è un sottografo connesso di } G \text{ e } V(C)=V(G)\} \]
+Mostriamo che in $\mathcal{C}$ esiste un albero.
+Osserviamo che $\mathcal{C}\not=\varnothing$ perché $G\in\mathcal{C}$ grazie
+all'ipotesi iniziale. Definiamo
+\[ S:=\{n\in\mathbb{N} | n=|E(C)|, C\in\mathcal{C}\} \subset \mathbb{N} \]
+Osserviamo che $|E(G)|\in S\Longrightarrow S\not=\varnothing$. Per il teorema del buon ordinamento dei naturali
+\[ \exists m:=\min S \Longrightarrow \exists \overline{C}\in\mathcal{C}: |E(\overline{C})|=m\leq |E(C)| \quad \forall C\in\mathcal{C} \]
+Mostriamo che $\overline{C}$ è un albero.
+Supponiamo per assurdo che non lo sia. Quindi grazie al teorema 20.4 \[\exists e\in E(\overline{C}):
+\overline{C}-e=(V(\overline{C}), E(\overline{C})\setminus\{e\})\in\mathcal{C}\]
+Ma allora $|E(\overline{C}-e)| = |E(\overline{C})|-1 \in S$ e
+avremmo $|E(\overline{C})|\leq |E(\overline{C})|-1$, che è assurdo.
+
+\cvd
+\end{tcolorbox}
+
+
+\part{Esercizi e Modelli di Esame}
+\chptr{Problemi di Insiemistica}
+\section{La dimostrazione per induzione}
+A tempo di stesura della presente dispensa, la dimostrazione per induzione
+costituisce l'unica tipologia di esercizio appartenente all'ambito degli
+insiemi e richiesta frequentemente in sede d'esame.
+La dimostrazione per induzione eccelle qualora rispetti tutti i punti qui
+sotto elencati:
+\begin{enumerate}
+\item Dichiarazione della proposizione che si intende dimostrare:
+generalmente si tratta della \textit{formuletta} indicizzata su $n$.
+Si tratta di un passo essenziale per far comprendere a coloro che
+leggono \textit{cosa} intendiamo dimostrare.
+\item Dichiarazione dell'insieme entro il quale dimostrare la
+validità della proposizione.
+\item Verifica della \textbf{base dell'induzione}.
+\item Dichiarazione dell'\textbf{ipotesi induttiva} e verifica del
+\textbf{passo induttivo} mediante l'ipotesi.
+\item Conclusioni: terminare il passo induttivo non basta; di fatto
+la conclusione consiste nel constatare che, verificati caso base e
+passo induttivo, la validità della proposizione si fonda sul meccanismo
+del principio di induzione (bisogna dunque nominarlo).
+\end{enumerate}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Si dimostri per induzione su $n\in\mathbb{N}$ che, per ogni intero $n\geq0$,
+vale: \[ \sum_{k=0}^{n}4k3^k=3+3^{n+1}(2n-1) \]
+\textit{Soluzione (dimostrazione):} si procede per induzione su $n\in\mathbb{N}$,
+considerando la proposizione \[P(n):=\left( \sum_{k=0}^{n}4k3^k=3+3^{n+1}(2n-1) \right)\]
+\underline{$n=0$ (base dell'induzione)} Si deve verificare $P(0)$,
+ovvero che $\sum_{k=0}^{0}4k3^k=3+3^{0+1}(2\cdot0-1)$.
+Vale:
+\begin{align*}
+\sum_{k=0}^{0}4k3^k  &=4\cdot0\cdot3^0=0\\
+3+3^{0+1}(2\cdot0-1) &=3+3(-1)=3-3=0
+\end{align*}
+Segue che $\sum_{k=0}^{0}4k3^k=0=3+3^{0+1}(2\cdot0-1)$, dunque la base
+dell'induzione è verificata.
+\begin{flushright}
+    Continua...
+\end{flushright}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black]
+    \underline{$n\in\mathbb{N},n\Longrightarrow n+1$ (passo induttivo)}
+    Si assume ora che l'uguaglianza espressa da $P(n)$ sia vera per
+    qualche $n\in\mathbb{N}$ (ipotesi induttiva). Si deve mostrare che
+    vale $P(n+1)$, cioè:
+    \[ \sum_{k=0}^{n+1}4k3^k=3+3^{(n+1)+1}(2(n+1)-1) \]
+    Vale:
+    \begin{align*}
+    \sum_{k=0}^{n+1}4k3^k &=4(n+1)3^{n+1} + \sum_{k=0}^{n}4k3^k \stackrel{\text{ipotesi induttiva}}{=}\\
+                            &=4(n+1)3^{n+1} + 3+3^{n+1}(2n-1) =\\
+                            &=3+3^{n+1}(2n-1+4(n+1)) =\\
+                            &=3+3^{n+1}(6n+3) =\\
+                            &=3+3^{n+1}3(2n+1) =\\
+                            &=3+3^{(n+1)+1}(2(n+1)-1)
+    \end{align*}
+    Dunque vale $P(n+1)$ e il passo induttivo è verificato. Grazie al
+    principio di induzione di prima forma, $P(n)$ vale $\forall n\in\mathbb{N}$.
+\end{tcolorbox}
+
+\chptr{Problemi di aritmetica modulare}
+\section{Sistemi semplici di congruenze}
+Sistemi di questo genere richiedono l'applicazione del teorema cinese
+del resto, la cui dimostrazione fornisce il procedimento per raggiungere la
+soluzione. Pertanto i punti essenziali sono:
+\begin{enumerate}
+\item Identificare e dichiarare l'insieme delle soluzioni.
+\item Verificare la compatibilità.
+\item Calcolare una soluzione particolare.
+\item Costruire l'insieme delle soluzioni.
+\end{enumerate}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Si determinino tutte le soluzioni del seguente sistema di congruenze:
+\[
+\begin{cases}
+    x\equiv 100 &\Mod{150}\\
+    x\equiv 65  &\Mod{85}
+\end{cases}
+\]
+Si dica inoltre, motivando la risposta, se il precedente sistema una
+soluzione divisibile per 2551.
+$\\\\$
+\textit{Soluzione:} Sia $S\subset\mathbb{Z}$ l'insieme delle soluzioni del sistema di
+cui sopra e calcoliamolo. Verifichiamo anzitutto la compatibilità del
+sistema. Grazie al teorema cinese del resto vale la relazione
+$S\not=\varnothing \Longleftrightarrow (150,85)|100-65$. Calcoliamo
+dunque $(150,85)$ tramite fattorizzazione:
+\[ 150=2\cdot3\cdot5^2, 85=5\cdot17 \Longrightarrow (150,85)=5 | 100-65=35 \]
+Dunque, grazie al teorema cinese del resto, $S\not=\varnothing$. Inoltre
+vale: \[ \text{(1) } 100-65=7\cdot5=7(150,85) \]
+Calcoliamo una soluzione particolare $c\in S$. Lanciamo l'algoritmo di
+Euclide su 150 e 85:
+\begin{align*}
+150 &=85+65                & 5&=65-3\cdot20 =\\
+85  &=65+20                &  &=65-3\cdot(85-65)=4\cdot65-3\cdot85\\
+65  &=3\cdot20+\textbf{5}  &  &=4\cdot(150-85)-3\cdot85=4\cdot150-7\cdot85 \Rightarrow\\
+20  &=4\cdot5+0            &  &\Rightarrow (150,85)=4\cdot150-7\cdot85 \text{ (2)}
+\end{align*}
+
+\begin{flushright}
+Continua...
+\end{flushright}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black,]
+    Grazie alle uguaglianze (1) e (2) vale:
+    \[ 100-65=7\cdot(150,85)=28\cdot150-49\cdot85 \Longleftrightarrow 100-28\cdot150=65-49\cdot85=-4100=:c\in S \]
+    Grazie al teorema cinese del resto, l'insieme delle soluzioni può essere
+    costruito come segue: \[ S=[-4100]_{[150,85]}\subset\mathbb{Z} \qquad\text{ dove }\qquad [150,85]=\frac{150\cdot85}{(150,85)}=2550\]
+    Dunque:
+    \[ S=[-4100+2\cdot2550]_{[150,85]}=[1000]_{[2550]}\subset\mathbb{Z} \]
+    Alternativamente, $S=\{1000+2550k\in\mathbb{Z}|k\in\mathbb{Z}\}$.
+    
+    Per rispondere alla seconda domanda, si può procedere in più modi. Notiamo
+    che la richiesta è equivalente a determinare se l'insieme delle soluzioni
+    $F$ del seguente sistema di congruenze è non vuoto:
+    \[
+    \begin{cases}
+        x\equiv 1000 &\Mod{2550}\\
+        x\equiv 0    &\Mod{2551}
+    \end{cases}
+    \]
+    Come prima applichiamo il teorema cinese del resto per verificare la
+    compatibilità (non è necessario calcolare la soluzione). Osserviamo
+    che $(2550,2551)=1$, perché 2551 è successivo a 2550. Verifichiamo:
+    \[ (2550,2551)=1|1000-0=1000 \]
+    Allora $F\not=\varnothing$ grazie al teorema cinese del
+    retsto ed esistono soluzioni al primo sistema divisibili
+    per 2551.
+\end{tcolorbox}
+
+
+\section{Congruenze con potenza e metodo RSA}
+Queste congruenze sono risolvibili in vari modi. Vedremo solo la soluzione
+mediante RSA, che tuttavia non risolve tutte le congruenze con potenza. Il
+procedimento generale per risolvere questi esercizi è il seguente:
+\begin{enumerate}
+\item Dichiarare l'insieme delle soluzioni.
+\item Verificare l'applicabilità del metodo RSA.
+\item Costruire l'insieme delle soluzioni.
+\item Calcolare l'esponente.
+\item Calcolare esplicitamente la soluzione, eventualmente ricorrendo
+al metodo dell'orbita.
+\end{enumerate}
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Si determinino tutte le soluzioni della seguente congruenza e si calcoli la
+minima soluzione positiva:
+\[ x^7\equiv59 \Mod{62} \]
+\textit{Soluzione:} Sia $S\subseteq\mathbb{Z}$ l'insieme delle soluzioni della congruenza
+di cui sopra e calcoliamolo. Verifichiamo l'applicabilità del metodo
+RSA, ovvero controlliamo se valgono le seguenti uguaglianze:
+\begin{align*}
+(59,62)\stackrel{\text{?}}{=}1:      & \text{ osserviamo che 59 è primo
+                                        e } 59\not|62 \text{ dunque
+                                        } (59,62)=1.\\
+(7,\Phi(62))\stackrel{\text{?}}{=}1: & \text{ applicando la moltiplicatività
+                                        della Phi di Eulero: }\\
+                                    &\Phi(62)=\Phi(2\cdot31)=\Phi(2)\Phi(31)=(2-1)(31-1)=30\\
+                                    & \text{7 è primo e} 7\not|30 \text{ dunque } (7,\Phi(62))=1.
+\end{align*}
+Il metodo RSA è applicabile.
+\begin{flushright}
+    Continua...
+\end{flushright}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black]
+    La soluzione può allora essere costruita nel
+    seguente modo:
+    \[ S=[59^d]_{62}\subset\mathbb{Z} \quad d>0, d\in[7]^{-1}_{\Phi(62)} \]
+    Calcoliamo $d$. Applichiamo l'algoritmo di Euclide a 7 e $\Phi(62)=30$:
+    \begin{align*}
+    30 &=4\cdot7+2                & 1&=7-3\cdot2 =\\
+    7  &=3\cdot2+\textbf{1}       &  &=7-3\cdot(30-4\cdot7)=\\
+    2  &=2\cdot1+0                &  &=13\cdot7-3\cdot30
+    \end{align*}
+    Vale:
+    \[ 1=13\cdot7+(-3)\cdot30 \Longrightarrow [1]_{30}=[13\cdot7]_{30}+[-3\cdot30]_{30} \Longrightarrow [1]_{30}=[13]_{30}[7]_{30} \Longrightarrow [7]^{-1}_{30}=[13]_{30} \]
+    Dunque $d=13$. Calcoliamo esplicitamente la soluzione e, per semplificare i
+    calcoli, studiamo l'orbita di $[59^k]_{62}, k\in\mathbb{N}\setminus\{0\}$.
+    
+    \begin{center}
+    \begin{tabular}{c|l}
+        \head{k} & \head{Rappresentante di $[59^k]_{62}$}\\
+        \hline
+        1        & 59\\
+        2        & $59^2=3481=56\cdot62+9\equiv9 \Mod{62}$\\
+        3        & $59^3=59^2\cdot59\equiv9\cdot59\equiv 35\Mod{62}$\\
+        4        & $59^4=(59^2)^2\equiv9^2\equiv 19 \Mod{62}$\\
+        5        & $59^5=59^4\cdot59\equiv19\cdot59\equiv 5\Mod{62}$\\
+    \end{tabular}
+    \end{center}
+    
+    Osserviamo che $[59^5]_{62}=[5]_{62}, [59^3]_{62}=[35]_{62}$, dunque
+    vale:
+    \[ [59^{13}]_{62}=[59^{2\cdot5+3}]_{62}=[59]^{2\cdot5+3}_{62}=[59^5]^2_{62}[59^3]_{62}=[5^2]_{62}[35]_{62}=[25\cdot35]_{62}=[7]_{62} \]
+    E la soluzione è:
+    \[ S=[7]_{62}\subseteq\mathbb{Z} \]
+    e la minima soluzione positiva corrisponde al rappresentante di $[7]_{62}$
+    ovvero 7.
+\end{tcolorbox}
+
+
+
+
+
+\chptr{Problemi sui Grafi}
+\section{Individuare un isomorfismo}
+Consideriamo il problema seguente:
+\begin{center}
+Dati due o più grafi, si desidera stabilire se sono tra loro isomorfi.
+\end{center}
+Quando si affronta un problema come questo, spesso torna utile ricorrere
+alle proprietà mostrate di seguito.
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Alcune caratteristiche dei grafi isomorfi]
+Siano $G,G'$ grafi finiti. Supponiamo $G\cong G'$. Allora:
+\begin{enumerate}
+\item $\text{Score}(G)=\text{Score}(G')$.
+\item $G,G'$ hanno lo stesso numero di componenti connesse.
+\item $G$ è 2-connesso $\Longleftrightarrow$ $G'$ è 2-connesso.
+\item $G$ è hamiltoniano $\Longleftrightarrow$ $G'$ è hamiltoniano.
+\item $G,G'$ hanno lo stesso numero di sottografi che sono $k$-cicli.
+\item Sia $f:V\to V'$ isomorfismo. Sia $v\in V$ tale che $\deg_G(v)=k\in\mathbb{N}$.
+Siano $v_1,...,v_k \in V$ adiacenti a $v$. Allora $f(v_1),...,f(v_k)$ sono
+adiacenti a $f(v)$: $\deg_G(v)=\deg_G(f(v))$, $\deg_G(v_i)=deg_G(f(v_i)) \quad \forall i \in\{1,...,k\}$.
+\end{enumerate}
+\end{tcolorbox}
+\noindent Supponiamo di avere $G,G'$ grafi finiti. Per stabilire se sono isomorfi, si
+controllano le proprietà da (1) a (6). Se anche una sola è falsa, allora
+si può concludere con certezza che $G\not\cong G'$. Altrimenti non si può
+ancora dare una risposta: infatti si tratta di condizioni sufficienti ma
+non necessarie all'esistenza di isomorfismi. Si prova allora a definire un
+isomorfismo.
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Siano rispettivamente $G_1, G_2, G_3$ i grafi raffigurati qui sotto.
+Si dica, motivando la risposta, quali tra essi sono isomorfi e quali no.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.27]{figures-fmi/exisomorph.pdf}
+\end{figure}
+\textit{Soluzione:}
+\end{tcolorbox}
+
+
+\section{Riconoscere uno score}
+Si consideri il seguente problema:
+\begin{center}
+dato $d = (d_1,...,d_n)\in\mathbb{N}^n$, stabilire se esiste un grafo $G$
+tale che $\text{Score}(G)=d$
+\end{center}
+Presentiamo ora un ridottissimo numero di lemmi, o \textit{ostruzioni}, che
+consentono di verificare se un vettore di interi può \emph{non} essere lo score
+di un grafo. Si sottolinea che:
+\begin{itemize}
+\item Le ostruzioni sono \textit{condizioni sufficienti ma non
+necessarie} all'esistenza di un grafo: dato un vettore $d$, se
+anche tutte le ostruzioni mostrate qui fallissero, non
+si potrebbe dire alcunché sull'esistenza di un grafo con score
+$d$.
+
+\item Alcune ostruzioni non sono applicabili a tutti i vettori:
+ciò non implica la non esistenza di un possibile grafo con score
+$d$.
+
+\item Queste non sono le uniche ostruzioni esistenti: in base
+alle dimensioni e alla conformazione del vettore dato, potrebbero
+anzi esistere migliaia di ostruzioni applicabili.
+\end{itemize}
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Ostruzione 1]
+Sia $d=(d_1,...,d_n)\in\mathbb{N}^n, n\geq1, d_1\leq...\leq d_n$.
+\[ d_n > n-1 \Longrightarrow \nexists G:\text{Score}(G)=d \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio: applicazione della prima ostruzione]
+Viene dato $d=(1,1,1,2,2,3,4,8)$. Quindi $n=8,d_n=8$
+ma $d_n = 8 > n - 1 = 8 - 1 = 7$. Quindi non esiste nessun grafo con
+score $d$.
+$\\\\$
+\textbf{Motivazione:} non può esistere un grafo con tale score,
+perché sono previsti $n$ vertici e ognuno di essi può essere
+collegato ad al più $n-1$ vertici (ovvero può appartenere ad
+al più $n-1$ lati).
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Osservazione]
+Sia $d=(0,...,0,d_1,...,d_n)\in\mathbb{N}^{n+m}$, dove compaiono
+$m$ zeri e vale $0<d_1\leq...\leq d_n$. Sia $d'=(d_1,...,d_n)\in\mathbb{N}^n$.
+\[ d \text{ è lo score di un grafo } \Longleftrightarrow d' \text{ è lo score di un grafo} \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Viene dato $d=(0,0,0,1,1,2,2,2,3,4,9)$. L'ostruzione
+1 non è verificata, quindi non si può ancora dare una risposta.
+Estraiamo da $d$ lo score $d'=(1,1,2,2,2,3,4,9)$ e riapplichiamo
+l'ostruzione: $d_n=9>n-1=8-1=7$. Segue che $d'$ non può rappresentare
+lo score di un grafo e per l'Osservazione non lo è nemmeno $d$.
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Ostruzione 2]
+Siano $h,k\in\mathbb{N}\setminus\{0\}$, sia $n:=h+k$ e $d\in\mathbb{N}^n$
+tale che $d=(d_1,...,d_h,n-1,...,n-1)$ dove $n-1$ compare $k$ volte
+e $d_1\leq...\leq d_h < n-1$.
+\[ d_1<k \Longrightarrow \nexists G:\text{Score}(G)=d \]
+\end{tcolorbox}
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio]
+Viene dato $d=(1,2,3,4,5,6,7,8,8)$. L'ostruzione 1
+non fornisce informazioni. Notiamo che è applicabile l'ostruzione 2:
+$d_1=1<2$ quindi non esistono grafi con score $d$.
+\end{tcolorbox}
+
+\noindent Una motivazione verbale esaustiva può essere la seguente:
+\emph{non può esistere un grafo con tale score,
+perché sarebbero previsti $n$ vertici di cui $k$ collegati a
+tutti gli altri, quindi $d_1$ dovrebbe valere almeno $k$.}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempio: combinare l'osservazione alle altre ostruzioni]
+Viene dato $d=(0,0,0,2,3,3,3,3,3,3,4,10,10,10)$.
+\begin{enumerate}
+\item $d_n=10 \not> n-1=14-1=13$: l'ostruzione 1 non fornisce
+informazioni.
+
+\item Non è applicabile l'ostruzione 2. Però il vettore $d'$
+è valido, quindi applichiamo l'osservazione: $d'_1=2<3$, quindi
+$d'$ non è lo score di un grafo e pertanto nemmeno $d$.
+\end{enumerate}
+\end{tcolorbox}  
+
+
+
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Ostruzione 3]
+Sia $n\in\mathbb{N},n\geq3$. Sia $d=(d_1,...,d_n)\in\mathbb{N}^n,
+d_1\leq...\leq d_n$. Definiamo: $L:=\left|\left\{ i\in\{1,...,n-2\}|d_i\geq2 \right\}\right|$.
+\[ L < d_{n-1}+d_n-n \Longrightarrow \nexists G:\text{Score}(G)=d \]
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title=Esempi]
+Viene dato $d=(1,1,1,3,5,5,7,7,8,8)$.
+\begin{enumerate}
+\item $d_n=8>n-1=10-1=9$: nulla si può dire.
+\item Ostruzione 2 non applicabile.
+\item $L=5 < d_n+d_{n-1}-n=8+8-10 = 6 \Longrightarrow \nexists G:\text{Score}(G)=d$.
+\end{enumerate}
+Viene dato $d=(2,2,2,2,3,3,3,5,6)$.
+\begin{enumerate}
+\item $d_n=6>n-1=9-1=8$: nulla si può dire.
+\item Ostruzione 2 non applicabile.
+\item $L=7<5+6-9=2$: nulla si può dire.
+\end{enumerate}
+\end{tcolorbox}  
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Ostruzione 4]
+Si veda il \textbf{lemma delle strette di mano}.
+\[ d \text{ non soddisfa il lemma delle strette di mano} \Longrightarrow \nexists G:\text{Score}(G)=d \]
+\end{tcolorbox}
+
+\section{Costruire un grafo: il teorema dello score}
+Una volta verificato che il vettore fornito non soddisfa alcuna ostruzione,
+è possibile procedere con l'applicazione del teorema dello score, che
+rappresenta un buon metodo di verifica e costruzione di un possibile grafo
+con score dato.
+\begin{tcolorbox}[title=Teorema dello Score]
+Sia $n\geq2$ e sia $d=(d_1,...,d_n)\in\mathbb{N}^n$ tale che $d_1\leq...\leq d_n\leq n-1$.
+Definiamo $d'=(d'_1,...,d'_{n-1})\in\mathbb{N}^{n-1}$ ponendo:
+\begin{align*}
+d'_i:=
+\begin{cases}
+    d_i   & i<n-d_n\\
+    d_i-1 & i\geq n-d_n
+\end{cases}
+\end{align*}
+Allora $d$ è lo score di un grafo se e solo se lo è $d'$.
+\end{tcolorbox}
+
+\noindent Si noti che il teorema dello score incorpora già in sé la condizione
+dell'ostruzione 1. La proprietà più apprezzabile di questo teorema
+risiede nel fatto che esso fornisce un algoritmo che abbassa la
+complessità dello score fornito, riducendolo ad una serie di casi
+possibili trattabili con molta facilità. Il lemma seguente ci mostra
+quali sono questi casi.
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title={Casi notevoli dopo l'applicazione del teorema dello score}]
+Sia $n\in\mathbb{N}\setminus\{0\}$ e sia $d=(d_1,...,d_n)\in\mathbb{N}^n$
+tale che $d_1\leq...\leq d_n\leq 2$. Valgono:
+\begin{enumerate}
+\item Se $d=(0,...,0,2)$ oppure $n\geq 2$ e $d=(0,...,0,2,2)$ allora
+non esiste un grafo con score $d$.
+
+\item Se $d=(0,...,0)$ o $d=(0,...,0,2,2,...,2)$ ($m\geq 3$ elementi
+di grado 2) allora esiste un grafo con tali score: $G_1$ con tutti
+i vertici isolati, $G_2$ con $n-m$ vertici isolati e un $m$-ciclo.
+
+\item Supponiamo che compaia almeno una volta l'unità 1. Se il numero
+di volte in cui compare 1 è dispari, allora non esiste $G$ con tale
+score (conseguenza del lemma delle strette di mano).
+
+\item Supponiamo che 1 compaia in numero pari $2k+2\geq 2$ ($k\geq 0$),
+che il numero di 0 sia $h\geq0$ e i 2 in numero $m\geq0$:
+$d=(0,...,0,1,1,...,1,1,2,...,2)$. Allora il seguente grafo $G$ ha score $d$:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.29]{figures-fmi/base.pdf}    
+\end{figure}
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!30, colframe=blue!30!black, title={Esempio di applicazione del teorema dello score}]
+Stabilire se esiste un grafo con score $d=(2,2,2,2,3,3,3,5,6)$. In caso affermativo,
+costruire un possibile grafo con score $d$, mediante il teorema dello score.
+$\\\\$
+\textit{Soluzione:} Passiamo in rassegna le ostruzioni viste finora:
+\begin{enumerate}
+    \item Osserviamo che $6>9-1$: nulla si può dire.
+    \item Questa ostruzione non è applicabile: nulla si può dire.
+    \item $L=7<5+6-9 = 2$: nulla si può dire.
+    \item $d$ soddisfa il lemma dell strette di mano: nulla si può dire.
+\end{enumerate}
+Non avendo concluso nulla, ricorriamo al teorema dello score (sappiamo già dall'ostruzione 1
+che il teorema è applicabile a $d$).
+\begin{center}
+    \begin{tabular}{c|lllllllll}
+        $d$   & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 5 & \textcolor{yellow}{6}\\
+        \hline
+        $d'$  & 2 & 2 & 1 & 1 & 2 & 2 & 2 & 4 & $\times$\\
+              & 1 & 1 & 2 & 2 & 2 & 2 & 2 & \textcolor{green}{4} & \tiny{ordinato}\\
+        \hline
+        $d''$ & 1 & 1 & 2 & 1 & 1 & 1 & 1 & $\times$ &\\
+              & 1 & 1 & 1 & 1 & \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{red}{2} & & \tiny{ordinato}
+    \end{tabular}
+\end{center}
+Ci siamo ricondotti ad una forma notevole dello score, facilmente
+rappresentabile. Costruiamo $G''$, che ha score $d''$:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{figures-fmi/basis.png}    
+\end{figure}
+Per il teorema dello score, sono score di qualche grafo anche $d'$ e
+$d$. Costruiamo un grafo $G$ con score $d$ mediante il teorema dello score:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{figures-fmi/teoscore.pdf}
+\end{figure}
+\end{tcolorbox}
+
+\noindent Sottolineamo alcuni punti:
+\begin{itemize}
+    \item Il grafo $G$ finale potrebbe non essere l'unico con score $d$ (potrebbero esistere alternative nella costruzione del grafo).
+    \item Sono stati omessi i nomi dei vertici, ma è buona prassi indicarli sempre, in particolare all'esame.
+\end{itemize}
+
+\section{Altri problemi sullo score}
+Appurato che un vettore $d$ è lo score di un grafo, si potrebbe
+estendere ulteriormente il problema chiedendosi se esistono
+grafi con score $d$ che sono connessi o sconnessi, hamiltoniani,
+2-connessi o aventi un certo numero di componenti connesse.
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Forzatura alla connessione]
+Sia $G=(V,E)$ un grafo  finito e sia $n=|V|$ il numero
+di vertici di $G$. Siano $m:=\min\{\deg_G(v)|v\in V\},
+M:=\min\{\deg_G(v)|v\in V\}$. Vale:
+\[ m\geq n-M-1 \Longrightarrow G \text{ è connesso} \]
+In termini di score, se viene fonrnito $d=(d_1,...,d_n)\in\mathbb{N}^n:
+n\geq1, d_1\leq...\leq d_n$, per i grafi con tale score, se
+esistono, vale:
+\[ d_1+d_n \geq n-1 \Longrightarrow G\text{ connesso }\forall G:\text{Score}(G)=d \]
+\end{tcolorbox}
+\begin{osservaz}
+\emph{la forzatura alla connessione è verificabile
+anche attraverso l'Ostruzione 2. Se infatti compaiono vertici di grado
+$n-1$, ovvero adiacenti a tutti gli altri, necessariamente tutti i
+grafi con score $d$, se esistono, sono connessi.}
+\end{osservaz}
+
+\begin{tcolorbox}[colback=red!30, colframe=red!30!black, title=Forzatura alla sconnessione]
+Sia $G=(V,E)$ un grafo finito. Vale:
+\[ |E|<|V|-1 \Longrightarrow G \text{ è sconnesso} \]
+In termini di score (si consideri il vettore come sopra):
+\[ \frac12\sum_{i=1}^{n}d_i < n-1 \Longrightarrow G\text{ sconnesso } \forall G:\text{Score}(G)=d \]
+\end{tcolorbox}
+\begin{osservaz}
+\emph{se entrambe le forzature falliscono, si può solo
+concludere che, se esistono grafi con score dato $d$, non tutti questi
+grafi sono connessi e non tutti sono sconnessi.}
+\end{osservaz}
+
+\noindent Dalla sezione sui grafi 2-connessi e hamiltoniani, sappiamo che tali
+grafi:
+\begin{itemize}
+\item Non possono contenere foglie.
+\item Sono connessi.
+\end{itemize}
+Vettori contenenti entrate nulle o corrispondenti a 1 sicuramente
+non possono essere score di grafi 2-connessi o hamiltoniani.
+Il problema del ciclo hamiltoniano è \textit{NP-completo}. In altre
+parole, non esistono metodi efficienti per capire se un dato grafo
+è hamiltoniano o meno.
+
+
+\section{Alberi e score}
+Dal teorema di caratterizzazione degli alberi finiti mediante la formula
+di Eulero, applicando la relazione fondamentale dei grafi finiti, si può
+formulare un utile corollario che lega score e alberi.
+
+\begin{tcolorbox}[colback=green!30, colframe=green!30!black, title={Esistenza di alberi con score dato}]
+    Sia $n\geq 2$ e sia $d=(d_1,...,d_n)\in\mathbb{N}^n$ tale che $1\leq d_1\leq...\leq d_n$.
+    Allora eisste un albero con score $d$ se e solo se vale la seguente \[ n-1 = \frac12\sum_{i=1}^{n}d_i \]
+\end{tcolorbox}
+In particolare, affinché un vettore $d$ sia lo score di qualche albero, è importante ricordare questi punti:
+\begin{itemize}
+    \item Se $d$ ha almeno due entrate, le prime due devono essere pari a 1 (l'albero deve possedere almeno due foglie).
+    \item $d$ deve soddisfare la formula di Eulero.
+\end{itemize}
+In generale, a meno che non ci si imbatte nel vettore $d=(0)$ (è un albero
+che consiste in un solo vertice isolato), applicando il corollario appena
+visto ad un $d=(\textcolor{blue}{1},\textcolor{blue}{1},...,\textcolor{red}{1},...,d_n)$ di dimensione $n\geq2$
+(e supponendo che tutte le entrate cosentano a $d$ di essere uno score di
+qualche albero) si può facilmente costruire un albero
+\begin{enumerate}
+    \item creando un cammino di lunghezza $k$, dove $k$ è il numero di entrate
+    in $d$ maggiori di $1$;
+    \item aggiungendo opportunamente le foglie ai vertici del cammino, secondo
+    il loro grado.
+\end{enumerate}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{figures-fmi/buildtree.pdf}
+\caption{\footnotesize Un generico albero $A$ costruito da $d$. Le foglie blu ricordano che $A$ deve contenere almeno due foglie; il cammino iniziale è in nero; le foglie rimanenti sono rosse.}
+\end{figure}
+
+\newpage
+\section{Esercizio sullo score, dall'inizio alla fine}
+Si dica, motivando la risposta, quale dei seguenti
+vettori è lo score di un grafo e, in caso affermativo,
+si costruisca un tale grafo utilizzando il teorema dello score.
+\[ d_1=(3,4,4,5,5,5,5,5) \qquad d_2=(2,3,3,3,3,4,5,7,7,7,12,12,12) \]
+Si dica inoltre se
+\begin{enumerate}
+    \item esiste un tale grafo che sia un albero;
+    \item esiste un tale grafo che sia hamiltoniano;
+    \item esiste un tale grafo che sia sconnesso.
+\end{enumerate}
+\textit{Soluzione:} non esiste alcun grafo $G$ che
+abbia score $d_2$. Infatti, $d_2$ imporrebbe a $G$
+di avere 13 vertici dei quali tre di grado 12,
+dunque adiacenti a tutti gli altri vertici; allora
+il vertice di grado minimo in $G$ dovrebbe avere
+almeno grado 3, ma questo contraddice quanto
+previsto in $d_2$, dove l'entrata minima equivale
+a 2.
+
+Non avendo trovato ostruzioni all'esistenza di
+grafi con score $d_1$, procediamo applicando il
+teorema dello score a $d_1$. Ciò è possibile
+dal momento che $d_{1_8} = 5 \leq 8 - 1$.
+
+\begin{center}
+    \begin{tabular}{c|llllllll}
+        $d_1$   & 3 & 4 & 4 & 5 & 5 & 5 & 5 & \textcolor{blue}{5}\\
+        \hline
+        $d_1'$  & 3 & 3 & 4 & 4 & 4 & 4 & \textcolor{orange}{4} & $\times$\\
+        \hline
+        $d_1''$ & 3 & 3 & 3 & 3 & 3 & \textcolor{red}{3} & $\times$ &\\
+        \hline
+        $d_1'''$ & 2 & 2 & 2 & 3 & \textcolor{green}{3} & $\times$ &&\\
+        \hline
+        $d_1''''$ & 1 & 1 & 2 & 2 & $\times$ &&&
+    \end{tabular}
+\end{center}
+Notiamo che da $d_1''''$ è possibile costruire un possibile rispettivo
+grafo $G''''$ mostrato di seguito:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{figures-fmi/bassefinal.png}
+\end{figure}
+
+\noindent Per il teorema dello score, allora anche tutti gli altri vettori,
+incluso $d_1$, sono lo score di qualche grafo. Costruiamo un grafo
+$G$ (si veda la Figura \ref{final}) con score $d_1$ mediante il teorema dello score.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{figures-fmi/finalex.png}
+\caption{$G$}
+\label{final}
+\end{figure}
+
+\noindent Rispondiamo ora agli altri quesiti:
+\begin{enumerate}
+    \item Osserviamo che $d_1$ non soddisfa la formula di Eulero:
+    \[ 8-1 = 7 \not= \frac{3+4+4+5+5+5+5+5}{2} = 18 \]
+    pertanto non esistono alberi con score $d_1$. D'altra parte
+    $d_1$, che contiene $8\geq2$ elementi, non possiede nessuna
+    entrata pari a 1, ovvero non possiede almeno 2 foglie
+    (condizione necessaria all'esistenza di un albero).
+    \item Si noti che il ciclo $c=(1,2,3,4,5,6,7,8)$, evidenziato in
+    Figura \ref{lasthamiltonian}, in $G$ è hamiltoniano.
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{figures-fmi/lastexhamilton.pdf}
+    \caption{Un ciclo ($c$) hamiltoniano in $G$.}
+    \label{lasthamiltonian}
+    \end{figure}
+    dunque $G$ è un grafo hamiltoniano con score $d_1$.
+
+    \item Applicando la condizione di \textit{forzatura alla connessione}
+    giungiamo alla seguente conclusione:
+    \[ 5+3 = 8 > 7 = 8-1 \]
+    che soddisfa la forzatura; ma allora ogni grafo con score
+    $d_1$ è necessariamente connesso e pertanto non esistono
+    grafi sconnessi con score $d_1$.
+\end{enumerate}
+
+\end{document}
